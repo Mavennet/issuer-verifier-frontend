@@ -1,5 +1,6 @@
 <script>
 	import Select, {Option} from '@smui/select';
+	import { fly } from 'svelte/transition';
 	import Textfield from '@smui/textfield';
 	import '@smui/select.css';
 	import '@smui/textfield.css';
@@ -43,7 +44,7 @@
 			</header>
 			<div class="card__content">
 				{#if selectedTab === 0}
-					<div class="content">
+					<div class="content" in:fly="{{ x: -200, duration: 700 }}">
 						<h1 class="content__title">Add To Wallet</h1>
 						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
 							<Option value=""></Option>
@@ -57,7 +58,7 @@
 						</button>
 					</div>
 				{:else if selectedTab === 1}
-					<div class="content">
+					<div class="content" in:fly="{{ x: 200, duration: 700 }}">
 						<h1 class="content__title">Verify From Wallet</h1>
 						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
 							<Option value=""></Option>
