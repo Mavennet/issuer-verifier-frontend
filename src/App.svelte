@@ -1,6 +1,8 @@
 <script>
-	import Select, {Option} from '@smui/select';
+	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
+	import * as polyfill from 'credential-handler-polyfill';
+	import Select, {Option} from '@smui/select';
 	import Textfield from '@smui/textfield';
 	import '@smui/select.css';
 	import '@smui/textfield.css';
@@ -8,12 +10,21 @@
 	import { vcList } from './consts';
 
 
-	let logoSrc = './assets/images/mavennet_logo.png';
+	const logoSrc = './assets/images/mavennet_logo.png';
+	let	selectedTab = 0,
+		vcChoice = '',
+		did = '',
+		polyfillInstance = null;
 
-	let selectedTab = 0;
 
-	let vcChoice = '';
-	let did = '';
+	onMount(async () => {
+		try {
+			polyfillInstance = await polyfill.loadOnce();
+			console.log('Ready to work with credentials!');
+    } catch (e) {
+      console.log('Error in Chapi LoadOnce', e);
+    }
+	});
 
 	function selectTab(value) {
 		selectedTab = value;
