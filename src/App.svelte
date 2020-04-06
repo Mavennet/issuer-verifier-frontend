@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import * as polyfill from 'credential-handler-polyfill';
+	import axios from 'axios';
+
 	import Select, {Option} from '@smui/select';
 	import Textfield from '@smui/textfield';
 	import '@smui/select.css';
@@ -10,11 +12,16 @@
 	import { vcList } from './consts';
 
 
-	const logoSrc = './assets/images/mavennet_logo.png';
-	let	selectedTab = 0,
+	const 
+		logoSrc = './assets/images/mavennet_logo.png',
+		apiUrl = process.env.API_URL;
+
+	let	
+		selectedTab = 0,
 		vcChoice = '',
 		did = '',
-		polyfillInstance = null;
+		polyfillInstance = null,
+		isLoading = false;
 
 
 	onMount(async () => {
@@ -25,6 +32,53 @@
       console.log('Error in Chapi LoadOnce', e);
     }
 	});
+
+	async function handleIssueVc() {
+		const vc = vcList.find(vc => vc.id === parseInt(vcChoice)).value;
+
+		try {
+			isLoading = true;
+			const { data } = await axios.post(`${apiUrl}/credentials/issueCredential`, vc);
+
+			const vp = getVerifiablePresentation(data);
+
+			const webCredential = new polyfillInstance.WebCredential(vp.type, vp);
+			const result = await polyfillInstance.credentials.store(webCredential);
+
+			if(!result) {
+      	throw new Error('Store credential operation did not succeed');
+    	}
+		} catch(err) {
+			console.log('Error issuing and storing VC', err);
+		} finally {
+			isLoading = false;
+		}
+	}
+
+	async function handleVerifyVc() {
+		const credentialQuery = {web: {}};
+
+		try {
+			const webCredential = await navigator.credentials.get(credentialQuery);
+
+			if(!webCredential) {
+      	throw new Error('Get credential operation did not succeed');
+    	}
+
+		} catch(err) {
+			console.log('Error issuing VC', err);
+		}
+	}
+
+	function getVerifiablePresentation(verifiableCredential) {
+		return ({
+			"@context": [
+				"https://www.w3.org/2018/credentials/v1"
+			],
+			"type": "VerifiablePresentation",
+			"verifiableCredential": verifiableCredential
+		});
+	}
 
 	function selectTab(value) {
 		selectedTab = value;
@@ -64,7 +118,7 @@
 							{/each}
 						</Select>
 						<Textfield variant="outlined" bind:value={did} label="Issuer*" class="content__input"/>
-						<button class="content__submit">
+						<button class="content__submit" on:click={handleIssueVc}>
 							RECEIVE
 						</button>
 					</div>
@@ -78,7 +132,7 @@
 							{/each}
 						</Select>
 						<Textfield variant="outlined" bind:value={did} label="Issuer*" class="content__input"/>
-						<button class="content__submit">
+						<button class="content__submit" on:click={handleVerifyVc}>
 							VERIFY
 						</button>
 					</div>
