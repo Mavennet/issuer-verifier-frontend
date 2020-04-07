@@ -135,7 +135,6 @@
 					<div class="content" in:fly="{{ x: 200, duration: 700 }}">
 						<h1 class="content__title">Verify From Wallet</h1>
 						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
-							<Option value=""></Option>
 							{#each credentialOptions as credential}
 								<Option value={credential.id} selected={vcChoice === credential.id}>{credential.label}</Option>
 							{/each}
