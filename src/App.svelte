@@ -10,6 +10,8 @@
 	import '@smui/select.css';
 	import '@smui/textfield.css';
 
+	import { getCredentialQuery, getVerifiablePresentation } from './helpers';
+
 	import { credentialOptions } from './options/credentialOptions';
 	import { issuerOptions } from './options/issuerOptions';
 
@@ -34,41 +36,6 @@
       console.log('Error in Chapi LoadOnce', e);
 		}
 	});
-
-	function getVerifiablePresentation(verifiableCredential) {
-		return ({
-			"@context": [
-				"https://www.w3.org/2018/credentials/v1"
-			],
-			"type": "VerifiablePresentation",
-			"verifiableCredential": verifiableCredential
-		});
-	}
-
-	function getCredentialQuery(type) {
-		return {
-			web: {
-				VerifiablePresentation: {
-					query: [
-						{
-							type: 'QueryByExample',
-							credentialQuery: {
-                reason: `Please present an ${type} credential.`,
-                example: {
-                  '@context': [
-                    'https://www.w3.org/2018/credentials/v1',
-                    "https://schema.org/"
-                  ],
-                  type: [type],
-                },
-              },
-						}
-					],
-					challenge: uuidv4()
-				}
-			}
-		}
-	}
 
 	async function handleIssueVc() {
 		const vc = credentialOptions.find(vc => vc.id === parseInt(vcChoice)).value;
@@ -99,7 +66,6 @@
 		try {
 			isLoading = true;
 			const webCredential = await navigator.credentials.get(credentialQuery);
-		console.log(webCredential);
 			if(!webCredential) {
       	throw new Error('Get credential operation did not succeed');
 			}
