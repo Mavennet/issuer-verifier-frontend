@@ -10,7 +10,8 @@
 	import '@smui/select.css';
 	import '@smui/textfield.css';
 
-	import { vcList } from './consts';
+	import { credentialOptions } from './options/credentialOptions';
+	import { issuerOptions } from './options/issuerOptions';
 
 
 	const 
@@ -19,8 +20,8 @@
 
 	let	
 		selectedTab = 0,
-		vcChoice = '',
-		did = '',
+		vcChoice = credentialOptions[0].id,
+		did = issuerOptions[0],
 		polyfillInstance = null,
 		isLoading = false;
 
@@ -70,7 +71,7 @@
 	}
 
 	async function handleIssueVc() {
-		const vc = vcList.find(vc => vc.id === parseInt(vcChoice)).value;
+		const vc = credentialOptions.find(vc => vc.id === parseInt(vcChoice)).value;
 
 		try {
 			isLoading = true;
@@ -92,7 +93,7 @@
 	}
 
 	async function handleVerifyVc() {
-		const type = vcList.find(vc => vc.id === parseInt(vcChoice)).label;
+		const type = credentialOptions.find(vc => vc.id === parseInt(vcChoice)).label;
 		const credentialQuery = getCredentialQuery(type);
 
 		try {
@@ -144,12 +145,15 @@
 					<div class="content" in:fly="{{ x: -200, duration: 700 }}">
 						<h1 class="content__title">Add To Wallet</h1>
 						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
-							<Option value=""></Option>
-							{#each vcList as vc}
-								<Option value={vc.id} selected={vcChoice === vc.id}>{vc.label}</Option>
+							{#each credentialOptions as credential}
+								<Option value={credential.id} selected={vcChoice === credential.id}>{credential.label}</Option>
 							{/each}
 						</Select>
-						<Textfield variant="outlined" bind:value={did} label="Issuer*" class="content__input"/>
+						<Select enhanced variant="outlined" bind:value={did} label="Issuer*" class="content__input">
+							{#each issuerOptions as issuer}
+								<Option value={issuer} selected={did === issuer}>{issuer}</Option>
+							{/each}
+						</Select>
 						<button class="content__submit" on:click={handleIssueVc}>
 							RECEIVE
 						</button>
@@ -159,8 +163,8 @@
 						<h1 class="content__title">Verify From Wallet</h1>
 						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
 							<Option value=""></Option>
-							{#each vcList as vc}
-								<Option value={vc.id} selected={vcChoice === vc.id}>{vc.label}</Option>
+							{#each credentialOptions as credential}
+								<Option value={credential.id} selected={vcChoice === credential.id}>{credential.label}</Option>
 							{/each}
 						</Select>
 						<Textfield variant="outlined" bind:value={did} label="Issuer*" class="content__input"/>
@@ -186,6 +190,7 @@
 	}
 
 	.page-content {
+		width: 100%;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
@@ -270,6 +275,13 @@
 
 	* :global(select, .content__input) {
 		margin-bottom: 31px;
+	}
+
+	* :global(select, .mdc-select__selected-text) {
+		display: inline-block !important;
+		white-space: nowrap !important;
+		overflow: hidden !important;
+		text-overflow: ellipsis !important;
 	}
 
 	.content__submit {

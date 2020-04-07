@@ -1,9 +1,9 @@
-import { CrudeProductCredential } from './credentials/CrudeProductCredential';
-import { CrudeInspectionCredential } from './credentials/CrudeInspectionCredential';
-import { QPInbondCredential } from './credentials/QPInbondCredential';
-import { BillOfLadingCredential } from './credentials/BillOfLadingCredential';
+import { CrudeProductCredential } from '../credentials/CrudeProductCredential';
+import { CrudeInspectionCredential } from '../credentials/CrudeInspectionCredential';
+import { QPInbondCredential } from '../credentials/QPInbondCredential';
+import { BillOfLadingCredential } from '../credentials/BillOfLadingCredential';
 
-export const vcList= [
+export const credentialOptions= [
   {
     id: 0,
     label: 'CrudeProductCredential',
