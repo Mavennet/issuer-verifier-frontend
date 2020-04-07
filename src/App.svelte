@@ -251,7 +251,6 @@
 		overflow: hidden;
 
 		padding: 40px 58px 48px 62px;
-		display: flex;
 	}
 
 	.content__title {
@@ -265,10 +264,11 @@
 
 	.content {
 		width: 100%;
+		display: flex;
+		flex-direction: column;
 	}
 
 	* :global(select, .content__input) {
-		width: 100%;
 		margin-bottom: 31px;
 	}
 
