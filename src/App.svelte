@@ -61,7 +61,7 @@
 
 		try {
 			isLoading = true;
-			const { data } = await axios.post('http://api.neo-flow.com/credentials/issueCredential', { credential, options } );
+			const { data } = await axios.post('https://api.neo-flow.com/credentials/issueCredential', { credential, options } );
 
 			const vp = getVerifiablePresentation(data);
 
