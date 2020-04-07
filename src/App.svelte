@@ -10,7 +10,7 @@
 	import '@smui/select.css';
 	import '@smui/textfield.css';
 
-	import { getCredentialQuery, getVerifiablePresentation } from './helpers';
+	import { getCredentialQuery, getVerifiablePresentation, getOptions } from './helpers';
 
 	import { credentialOptions } from './options/credentialOptions';
 	import { issuerOptions } from './options/issuerOptions';
@@ -23,7 +23,7 @@
 	let	
 		selectedTab = 0,
 		vcChoice = credentialOptions[0].id,
-		did = issuerOptions[0],
+		issuer = issuerOptions[0],
 		polyfillInstance = null,
 		isLoading = false;
 
@@ -38,11 +38,12 @@
 	});
 
 	async function handleIssueVc() {
-		const vc = credentialOptions.find(vc => vc.id === parseInt(vcChoice)).value;
+		const credential = credentialOptions.find(vc => vc.id === parseInt(vcChoice)).value;
+		const options = getOptions(issuer, 'assertionMethod', 'did:key:z6MkjRagNiMu91DduvCvgEsqLZDVzrJzFrwahc4tXLt9DoHd#z6MkjRagNiMu91DduvCvgEsqLZDVzrJzFrwahc4tXLt9DoHd');
 
 		try {
 			isLoading = true;
-			const { data } = await axios.post(`${apiUrl}/credentials/issueCredential`, { credential: vc } );
+			const { data } = await axios.post(`${apiUrl}/credentials/issueCredential`, { credential, options } );
 
 			const vp = getVerifiablePresentation(data);
 
@@ -115,9 +116,9 @@
 								<Option value={credential.id} selected={vcChoice === credential.id}>{credential.label}</Option>
 							{/each}
 						</Select>
-						<Select enhanced variant="outlined" bind:value={did} label="Issuer*" class="content__input">
-							{#each issuerOptions as issuer}
-								<Option value={issuer} selected={did === issuer}>{issuer}</Option>
+						<Select enhanced variant="outlined" bind:value={issuer} label="Issuer*" class="content__input">
+							{#each issuerOptions as issuerItem}
+								<Option value={issuerItem} selected={issuerItem === issuer}>{issuerItem}</Option>
 							{/each}
 						</Select>
 						<button class="content__submit" on:click={handleIssueVc}>
@@ -133,7 +134,7 @@
 								<Option value={credential.id} selected={vcChoice === credential.id}>{credential.label}</Option>
 							{/each}
 						</Select>
-						<Textfield variant="outlined" bind:value={did} label="Issuer*" class="content__input"/>
+						<Textfield variant="outlined" bind:value={issuer} label="Issuer*" class="content__input"/>
 						<button class="content__submit" on:click={handleVerifyVc}>
 							VERIFY
 						</button>

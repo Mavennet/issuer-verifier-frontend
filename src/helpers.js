@@ -28,3 +28,10 @@ export const getVerifiablePresentation = verifiableCredential => ({
   "type": "VerifiablePresentation",
   "verifiableCredential": verifiableCredential
 });
+
+export const getOptions = (issuer, proofPurpose, verificationMethod) => ({
+  issuer,
+  issuanceDate: new Date().toISOString(),
+  proofPurpose,
+  verificationMethod
+});
