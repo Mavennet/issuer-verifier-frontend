@@ -3,6 +3,7 @@
 	import { fly } from 'svelte/transition';
 	import * as polyfill from 'credential-handler-polyfill';
 	import axios from 'axios';
+	import { v4 as uuidv4 } from 'uuid';
 
 	import Select, {Option} from '@smui/select';
 	import Textfield from '@smui/textfield';
@@ -30,15 +31,50 @@
 			console.log('Ready to work with credentials!');
     } catch (e) {
       console.log('Error in Chapi LoadOnce', e);
-    }
+		}
 	});
+
+	function getVerifiablePresentation(verifiableCredential) {
+		return ({
+			"@context": [
+				"https://www.w3.org/2018/credentials/v1"
+			],
+			"type": "VerifiablePresentation",
+			"verifiableCredential": verifiableCredential
+		});
+	}
+
+	function getCredentialQuery(type) {
+		return {
+			web: {
+				VerifiablePresentation: {
+					query: [
+						{
+							type: 'QueryByExample',
+							credentialQuery: {
+                reason: `Please present an ${type} credential.`,
+                example: {
+                  '@context': [
+                    'https://www.w3.org/2018/credentials/v1',
+                    "https://schema.org/"
+                  ],
+                  type: [type],
+                },
+              },
+						}
+					],
+					challenge: uuidv4()
+				}
+			}
+		}
+	}
 
 	async function handleIssueVc() {
 		const vc = vcList.find(vc => vc.id === parseInt(vcChoice)).value;
 
 		try {
 			isLoading = true;
-			const { data } = await axios.post(`${apiUrl}/credentials/issueCredential`, vc);
+			const { data } = await axios.post(`${apiUrl}/credentials/issueCredential`, { credential: vc } );
 
 			const vp = getVerifiablePresentation(data);
 
@@ -56,28 +92,24 @@
 	}
 
 	async function handleVerifyVc() {
-		const credentialQuery = {web: {}};
+		const type = vcList.find(vc => vc.id === parseInt(vcChoice)).label;
+		const credentialQuery = getCredentialQuery(type);
 
 		try {
+			isLoading = true;
 			const webCredential = await navigator.credentials.get(credentialQuery);
-
+		console.log(webCredential);
 			if(!webCredential) {
       	throw new Error('Get credential operation did not succeed');
-    	}
-
+			}
+			
+			const { data } = await axios.post(`${apiUrl}/verifier/credentials`, { verifiableCredential: webCredential.data });
+			console.log(data);
 		} catch(err) {
-			console.log('Error issuing VC', err);
+			console.log('Error getting and verifying VC', err);
+		} finally {
+			isLoading = false;
 		}
-	}
-
-	function getVerifiablePresentation(verifiableCredential) {
-		return ({
-			"@context": [
-				"https://www.w3.org/2018/credentials/v1"
-			],
-			"type": "VerifiablePresentation",
-			"verifiableCredential": verifiableCredential
-		});
 	}
 
 	function selectTab(value) {
