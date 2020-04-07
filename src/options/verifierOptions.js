@@ -3,7 +3,7 @@ export const verifierOptions = [
     id: 0,
     alt: 'Mavennet Verifier Logo',
     src: 'mavennet_verifier.png',
-    url: 'https://ec2-100-27-6-3.compute-1.amazonaws.com/verifier/credentials'
+    url: 'http://ec2-100-27-6-3.compute-1.amazonaws.com/verifier/credentials'
   },
   {
     id: 1,

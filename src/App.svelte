@@ -10,6 +10,7 @@
 	import '@smui/textfield.css';
 
 	import Snackbar from './components/Snackbar.svelte';
+	import LoadingSpinner from './components/LoadingSpinner.svelte';
 
 	import { 
 		getCredentialQuery, 
@@ -75,10 +76,11 @@
 		if (!vcChoice) {
 			showSnackbar(true, FORM_MESSAGE.TYPE);
 			return false;
-		} else if (!selectedVerifier) {
-			showSnackbar(true, FORM_MESSAGE.VERIFIER);
-			return false;
 		}
+		//  else if (selectedVerifier !== null) {
+		// 	showSnackbar(true, FORM_MESSAGE.VERIFIER);
+		// 	return false;
+		// }
 
 		return true;
 	}
@@ -93,7 +95,7 @@
 
 		try {
 			isLoading = true;
-			const { data } = await axios.post('https://api.neo-flow.com/credentials/issueCredential', { credential, options } );
+			const { data } = await axios.post('http://ec2-100-27-6-3.compute-1.amazonaws.com:4000/credentials/issueCredential', { credential, options } );
 
 			const vp = getVerifiablePresentation(data);
 
@@ -197,7 +199,11 @@
 							{/each}
 						</Select>
 						<button class="content__submit" on:click={handleIssueVc}>
-							RECEIVE
+							{#if isLoading}
+								<LoadingSpinner />
+							{:else}
+								RECEIVE
+							{/if}
 						</button>
 					</div>
 				{:else if selectedTab === 1}
@@ -225,7 +231,11 @@
 							</ul>
 						</div>
 						<button class="content__submit" on:click={handleVerifyVc}>
-							VERIFY
+							{#if isLoading}
+								<LoadingSpinner />
+							{:else}
+								VERIFY
+							{/if}
 						</button>
 					</div>
 				{/if}
@@ -400,6 +410,10 @@
 		letter-spacing: 0;
 		line-height: 20px;
 		text-align: center;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
 
 		background-color: var(--clr-button-background);
 		padding: 0.9375em 1.875em;
