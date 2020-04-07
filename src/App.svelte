@@ -21,7 +21,11 @@
 	import { issuerOptions } from './options/issuerOptions';
 	import { verifierOptions } from './options/verifierOptions';
 
-	import { ISSUER_MESSAGE, VERIFIER_MESSAGE } from './consts';
+	import { 
+		ISSUER_MESSAGE, 
+		VERIFIER_MESSAGE, 
+		FORM_MESSAGE 
+	} from './consts';
 
 
 	const 
@@ -55,7 +59,35 @@
 		snackbarMessage = message;
 	}
 
+	function validateIssueForm() {
+		if (!vcChoice) {
+			showSnackbar(true, FORM_MESSAGE.TYPE);
+			return false;
+		} else if (!issuer) {
+			showSnackbar(true, FORM_MESSAGE.ISSUER);
+			return false;
+		}
+
+		return true;
+	}
+
+	function validateVerifyForm() {
+		if (!vcChoice) {
+			showSnackbar(true, FORM_MESSAGE.TYPE);
+			return false;
+		} else if (!selectedVerifier) {
+			showSnackbar(true, FORM_MESSAGE.VERIFIER);
+			return false;
+		}
+
+		return true;
+	}
+
 	async function handleIssueVc() {
+		if (!validateIssueForm()) {
+			return;
+		}
+
 		const credential = credentialOptions.find(vc => vc.id === parseInt(vcChoice)).value;
 		const options = getOptions(issuer, 'assertionMethod', 'did:key:z6MkjRagNiMu91DduvCvgEsqLZDVzrJzFrwahc4tXLt9DoHd#z6MkjRagNiMu91DduvCvgEsqLZDVzrJzFrwahc4tXLt9DoHd');
 
@@ -82,6 +114,9 @@
 	}
 
 	async function handleVerifyVc() {
+		if (!validateVerifyForm()) {
+			return;
+		}
 		const type = credentialOptions.find(vc => vc.id === parseInt(vcChoice)).label;
 		const apiUrl = verifierOptions.find(verifier => verifier.id === parseInt(selectedVerifier)).url;
 		const credentialQuery = getCredentialQuery(type);

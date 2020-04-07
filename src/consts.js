@@ -7,3 +7,9 @@ export const VERIFIER_MESSAGE = {
   SUCCESS: 'The credential was successfully retrieved from your wallet and verified!',
   ERROR: 'It was not possible to retrieve the credential from your wallet verify it!'
 };
+
+export const FORM_MESSAGE = {
+  TYPE: 'Please select a credential type',
+  ISSUER: 'Please select an issuer',
+  VERIFIER: 'Please select a verifier'
+};
