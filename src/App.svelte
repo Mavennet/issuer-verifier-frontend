@@ -3,18 +3,25 @@
 	import { fly } from 'svelte/transition';
 	import * as polyfill from 'credential-handler-polyfill';
 	import axios from 'axios';
-	import { v4 as uuidv4 } from 'uuid';
 
 	import Select, {Option} from '@smui/select';
 	import Textfield from '@smui/textfield';
 	import '@smui/select.css';
 	import '@smui/textfield.css';
 
-	import { getCredentialQuery, getVerifiablePresentation, getOptions } from './helpers';
+	import Snackbar from './components/Snackbar.svelte';
+
+	import { 
+		getCredentialQuery, 
+		getVerifiablePresentation, 
+		getOptions 
+	} from './helpers';
 
 	import { credentialOptions } from './options/credentialOptions';
 	import { issuerOptions } from './options/issuerOptions';
 	import { verifierOptions } from './options/verifierOptions';
+
+	import { ISSUER_MESSAGE, VERIFIER_MESSAGE } from './consts';
 
 
 	const 
@@ -23,11 +30,14 @@
 
 	let	
 		selectedTab = 0,
-		vcChoice = credentialOptions[0].id,
-		issuer = issuerOptions[0],
+		vcChoice,
+		issuer,
 		polyfillInstance = null,
 		isLoading = false,
-		selectedVerifier;
+		selectedVerifier,
+		isSnackbarShowing = false,
+		snackbarMessage,
+		hasSnackBarError;
 
 
 	onMount(async () => {
@@ -39,13 +49,19 @@
 		}
 	});
 
+	function showSnackbar(hasError, message) {
+		isSnackbarShowing = true;
+		hasSnackBarError = hasError;
+		snackbarMessage = message;
+	}
+
 	async function handleIssueVc() {
 		const credential = credentialOptions.find(vc => vc.id === parseInt(vcChoice)).value;
 		const options = getOptions(issuer, 'assertionMethod', 'did:key:z6MkjRagNiMu91DduvCvgEsqLZDVzrJzFrwahc4tXLt9DoHd#z6MkjRagNiMu91DduvCvgEsqLZDVzrJzFrwahc4tXLt9DoHd');
 
 		try {
 			isLoading = true;
-			const { data } = await axios.post(`${apiUrl}/credentials/issueCredential`, { credential, options } );
+			const { data } = await axios.post('http://api.neo-flow.com/credentials/issueCredential', { credential, options } );
 
 			const vp = getVerifiablePresentation(data);
 
@@ -54,9 +70,12 @@
 
 			if(!result) {
       	throw new Error('Store credential operation did not succeed');
-    	}
+			}
+			
+			showSnackbar(false, ISSUER_MESSAGE.SUCCESS);
 		} catch(err) {
 			console.log('Error issuing and storing VC', err);
+			showSnackbar(true, ISSUER_MESSAGE.ERROR);
 		} finally {
 			isLoading = false;
 		}
@@ -64,6 +83,7 @@
 
 	async function handleVerifyVc() {
 		const type = credentialOptions.find(vc => vc.id === parseInt(vcChoice)).label;
+		const apiUrl = verifierOptions.find(verifier => verifier.id === parseInt(selectedVerifier)).url;
 		const credentialQuery = getCredentialQuery(type);
 
 		try {
@@ -72,27 +92,41 @@
 			if(!webCredential) {
       	throw new Error('Get credential operation did not succeed');
 			}
+			const { data } = await axios.post(apiUrl, { verifiableCredential: webCredential.data.verifiableCredential });
+
 			
-			const { data } = await axios.post(`${apiUrl}/verifier/credentials`, { verifiableCredential: webCredential.data });
-			console.log(data);
+			showSnackbar(false, VERIFIER_MESSAGE.SUCCESS);
 		} catch(err) {
 			console.log('Error getting and verifying VC', err);
+			showSnackbar(true, VERIFIER_MESSAGE.ERROR);
 		} finally {
 			isLoading = false;
 		}
 	}
 
 	function selectTab(value) {
+		selectedVerifier = null;
+		issuer = null;
+		vcChoice = null;
 		selectedTab = value;
 	}
 
 	function selectVerifier(id) {
 		selectedVerifier = id;
 	}
+
+	function setDisplaySnackBar(value) {
+		isSnackbarShowing = value;
+	}
 </script>
 
 
 <div class="wrapper">
+	<Snackbar 
+		text={snackbarMessage} 
+		display={isSnackbarShowing} 
+		onHide={() => isSnackbarShowing = false}
+		error={hasSnackBarError}></Snackbar>
 	<main class="page-content">
 		<img class="logo" src={logoSrc} alt="Mavennet Logo">
 
@@ -172,6 +206,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		position: relative;
 
 		box-sizing: content-box;
 	}
