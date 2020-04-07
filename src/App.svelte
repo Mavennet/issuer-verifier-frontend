@@ -14,6 +14,7 @@
 
 	import { credentialOptions } from './options/credentialOptions';
 	import { issuerOptions } from './options/issuerOptions';
+	import { verifierOptions } from './options/verifierOptions';
 
 
 	const 
@@ -25,7 +26,8 @@
 		vcChoice = credentialOptions[0].id,
 		issuer = issuerOptions[0],
 		polyfillInstance = null,
-		isLoading = false;
+		isLoading = false,
+		selectedVerifier;
 
 
 	onMount(async () => {
@@ -83,6 +85,10 @@
 	function selectTab(value) {
 		selectedTab = value;
 	}
+
+	function selectVerifier(id) {
+		selectedVerifier = id;
+	}
 </script>
 
 
@@ -134,7 +140,22 @@
 								<Option value={credential.id} selected={vcChoice === credential.id}>{credential.label}</Option>
 							{/each}
 						</Select>
-						<Textfield variant="outlined" bind:value={issuer} label="Issuer*" class="content__input"/>
+
+						<div class="content__verifiers">
+							<h2 class="verifiers__title">Select a verifier</h2>
+							<ul class="verifiers__list">
+								{#each verifierOptions as verifier}
+									<li class="list__item">
+										<img 
+											class="item__logo" 
+											src={`./assets/images/${verifier.src}`} 
+											alt={verifier.alt}
+											class:item__logo--active="{selectedVerifier === verifier.id}"
+											on:click={() => selectVerifier(verifier.id)}>
+									</li>
+								{/each}
+							</ul>
+						</div>
 						<button class="content__submit" on:click={handleVerifyVc}>
 							VERIFY
 						</button>
@@ -178,6 +199,7 @@
 		--clr-text--inactive: var(--pallete-dusty-grey);
 		--clr-button-background: var(--pallete-medium-purple);
 		--clr-button-text: var(--pallete-white);
+		--clr-button-selected-verifier: var(--pallete-medium-purple);
 
 		font-family: 'Roboto', sans-serif;
 
@@ -249,6 +271,56 @@
 		white-space: nowrap !important;
 		overflow: hidden !important;
 		text-overflow: ellipsis !important;
+	}
+
+	.content__verifiers {
+		margin-bottom: 20px;
+	}
+
+	.verifiers__title {
+		font-size: 18px;
+		font-weight: 500;
+		letter-spacing: 0;
+		line-height: 28px;
+
+		margin-bottom: .4em;
+	}
+
+	.verifiers__list {
+		list-style: none;
+		display: flex;
+		justify-content: flex-start;
+		align-items: flex-start;
+		flex-wrap: wrap;
+	}
+
+	.list__item {
+		margin: 0 10px;
+	}
+
+	.list__item:first-child {
+		margin-left: 0;
+	}
+
+	.list__item:last-child {
+		margin-right: 0;
+	}
+
+
+	.item__logo {
+		box-sizing: content-box;
+		width: 30px;
+		cursor: pointer;
+		padding: 4px;
+		border: 2px solid transparent;
+		border-radius: 10px;
+		-webkit-box-shadow: 0px 2px 26px -10px rgba(0,0,0,0.75);
+		-moz-box-shadow: 0px 2px 26px -10px rgba(0,0,0,0.75);
+		box-shadow: 0px 2px 26px -10px rgba(0,0,0,0.75);
+	}
+	
+	.item__logo--active {
+		border: 2px solid var(--clr-button-selected-verifier);
 	}
 
 	.content__submit {
