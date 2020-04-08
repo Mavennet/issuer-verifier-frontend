@@ -13,3 +13,9 @@ export const FORM_MESSAGE = {
   ISSUER: 'Please select an issuer',
   VERIFIER: 'Please select a verifier'
 };
+
+export const SNACKBAR_TYPE = {
+  SUCCESS: 'success',
+  WARNING: 'warning',
+  ERROR: 'error'
+};

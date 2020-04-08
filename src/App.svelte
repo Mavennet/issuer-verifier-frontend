@@ -25,7 +25,8 @@
 	import { 
 		ISSUER_MESSAGE, 
 		VERIFIER_MESSAGE, 
-		FORM_MESSAGE 
+		FORM_MESSAGE,
+		SNACKBAR_TYPE
 	} from './consts';
 
 
@@ -42,7 +43,7 @@
 		selectedVerifier,
 		isSnackbarShowing = false,
 		snackbarMessage,
-		hasSnackBarError;
+		snackbarType;
 
 
 	onMount(async () => {
@@ -54,18 +55,18 @@
 		}
 	});
 
-	function showSnackbar(hasError, message) {
+	function showSnackbar(type, message) {
 		isSnackbarShowing = true;
-		hasSnackBarError = hasError;
+		snackbarType = type;
 		snackbarMessage = message;
 	}
 
 	function validateIssueForm() {
 		if (!vcChoice) {
-			showSnackbar(true, FORM_MESSAGE.TYPE);
+			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.TYPE);
 			return false;
 		} else if (!issuer) {
-			showSnackbar(true, FORM_MESSAGE.ISSUER);
+			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.ISSUER);
 			return false;
 		}
 
@@ -74,7 +75,7 @@
 
 	function validateVerifyForm() {
 		if (!vcChoice) {
-			showSnackbar(true, FORM_MESSAGE.TYPE);
+			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.TYPE);
 			return false;
 		}
 		//  else if (selectedVerifier !== null) {
@@ -95,7 +96,7 @@
 
 		try {
 			isLoading = true;
-			const { data } = await axios.post('http://api.neo-flow.com/credentials/issueCredential', { credential, options } );
+			const { data } = await axios.post('https://api.neo-flow.com/credentials/issueCredential', { credential, options } );
 
 			const vp = getVerifiablePresentation(data);
 
@@ -106,10 +107,10 @@
       	throw new Error('Store credential operation did not succeed');
 			}
 			
-			showSnackbar(false, ISSUER_MESSAGE.SUCCESS);
+			showSnackbar(SNACKBAR_TYPE.SUCCESS, ISSUER_MESSAGE.SUCCESS);
 		} catch(err) {
 			console.log('Error issuing and storing VC', err);
-			showSnackbar(true, ISSUER_MESSAGE.ERROR);
+			showSnackbar(SNACKBAR_TYPE.ERROR, ISSUER_MESSAGE.ERROR);
 		} finally {
 			isLoading = false;
 		}
@@ -132,10 +133,10 @@
 			const { data } = await axios.post(apiUrl, { verifiableCredential: webCredential.data.verifiableCredential });
 
 			
-			showSnackbar(false, VERIFIER_MESSAGE.SUCCESS);
+			showSnackbar(SNACKBAR_TYPE.SUCCESS, VERIFIER_MESSAGE.SUCCESS);
 		} catch(err) {
 			console.log('Error getting and verifying VC', err);
-			showSnackbar(true, VERIFIER_MESSAGE.ERROR);
+			showSnackbar(SNACKBAR_TYPE.ERROR, VERIFIER_MESSAGE.ERROR);
 		} finally {
 			isLoading = false;
 		}
@@ -163,7 +164,7 @@
 		text={snackbarMessage} 
 		display={isSnackbarShowing} 
 		onHide={() => isSnackbarShowing = false}
-		error={hasSnackBarError}></Snackbar>
+		type={snackbarType}></Snackbar>
 	<main class="page-content">
 		<img class="logo" src={logoSrc} alt="Mavennet Logo">
 
