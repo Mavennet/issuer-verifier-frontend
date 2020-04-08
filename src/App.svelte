@@ -95,7 +95,7 @@
 
 		try {
 			isLoading = true;
-			const { data } = await axios.post('http://ec2-100-27-6-3.compute-1.amazonaws.com:4000/credentials/issueCredential', { credential, options } );
+			const { data } = await axios.post('https://api.neo-flow.com/credentials/issueCredential', { credential, options } );
 
 			const vp = getVerifiablePresentation(data);
 
