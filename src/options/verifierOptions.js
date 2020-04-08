@@ -3,7 +3,7 @@ export const verifierOptions = [
     id: 0,
     alt: 'Mavennet Verifier Logo',
     src: 'mavennet_verifier.png',
-    url: 'https://api.neo-flow.com/verifier/credentials'
+    url: 'http://api.neo-flow.com/verifier/credentials'
   },
   {
     id: 1,
