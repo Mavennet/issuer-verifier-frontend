@@ -4,9 +4,12 @@ export const CrudeInspectionCredential = {
     "https://schema.org/",
     "https://mavennet.github.io/contexts/crude-inspection-v1.0.jsonld",
   ],
-  id: "dd0fbb48-7071-11ea-bc55-0242ac130003",
+  id: "http://neo-flow.com/credentials/dd0fbb48-7071-11ea-bc55-0242ac130003",
   type: ["VerifiableCredential", "CrudeInspectionCredential"],
-  issuanceDate: "2020-03-31T21:12:57Z",
+  name: "Heavy Sour Dilbit Inspection Report",
+  description: "Inspection details of Heavy Sour Dilbit.",
+  issuer: "did:v1:test:nym:z6MkhdmzFu659ZJ4XKj31vtEDmjvsi5yDZG5L7Caz63oP39k",
+  issuanceDate: "2020-04-09T21:12:48Z",
   credentialSubject: {
     producer:
       "did:v1:test:nym:z6MkfG5HTrBXzsAP8AbayNpG3ZaoyM4PCqNPrdWQRSpHDV6J",
@@ -14,9 +17,9 @@ export const CrudeInspectionCredential = {
       "did:v1:test:nym:z6MkhdmzFu659ZJ4XKj31vtEDmjvsi5yDZG5L7Caz63oP39k",
     category: "Western Canadian Select",
     hsCode: "270900",
-    identifier: "dd0fbb48-7071-11ea-bc55-0242ac130003",
-    name: "Heavy Sour Dilbit",
-    description: "",
+    identifier: "3a185b8f-078a-4646-8343-76a45c2856a5",
+    name: "Heavy Sour Dilbit Inspection Report",
+    description: "Inspection details of Heavy Sour Dilbit",
     volume: "10000",
     address: {
       address: "Edmonton, CAN",
