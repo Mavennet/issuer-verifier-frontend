@@ -93,7 +93,7 @@
 			return;
 		}
 
-		const credential = credentialOptions.find(vc => vc.id === parseInt(vcChoice)).value;
+		const credential = credentialOptions.find(vc => vc.label === vcChoice).value;
 
 		//TODO: check for method in the future;
 		const issuerInfo = issuerOptions.find(issuerItem => issuerItem.did === issuer);
@@ -125,7 +125,7 @@
 		if (!validateVerifyForm()) {
 			return;
 		}
-		const type = credentialOptions.find(vc => vc.id === parseInt(vcChoice)).label;
+		const type = credentialOptions.find(vc => vc.label === vcChoice).label;
 		const apiUrl = verifierOptions.find(verifier => verifier.id === selectedVerifier).url;
 		const credentialQuery = getCredentialQuery(type);
 
@@ -198,7 +198,7 @@
 						<h1 class="content__title">Add To Wallet</h1>
 						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
 							{#each credentialOptions as credential}
-								<Option value={credential.id} selected={vcChoice === credential.id}>{credential.label}</Option>
+								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
 							{/each}
 						</Select>
 						<Select enhanced variant="outlined" bind:value={issuer} label="Issuer*" class="content__input">
@@ -219,7 +219,7 @@
 						<h1 class="content__title">Verify From Wallet</h1>
 						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
 							{#each credentialOptions as credential}
-								<Option value={credential.id} selected={vcChoice === credential.id}>{credential.label}</Option>
+								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
 							{/each}
 						</Select>
 
