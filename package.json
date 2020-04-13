@@ -1,7 +1,7 @@
 {
   "name": "issuer-verifier-mavennet",
   "version": "1.0.0",
-  "homepage": "http://mavennet.github.io",
+  "homepage": "http://mavennet.github.io/issuer-verifier-frontend",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
