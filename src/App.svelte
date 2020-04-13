@@ -92,7 +92,7 @@
 		}
 
 		const credential = credentialOptions.find(vc => vc.id === parseInt(vcChoice)).value;
-		const options = getOptions(issuer, 'assertionMethod', 'did:key:z6MkjRagNiMu91DduvCvgEsqLZDVzrJzFrwahc4tXLt9DoHd#z6MkjRagNiMu91DduvCvgEsqLZDVzrJzFrwahc4tXLt9DoHd');
+		const options = getOptions(issuer, 'assertionMethod', issuer);
 
 		try {
 			isLoading = true;

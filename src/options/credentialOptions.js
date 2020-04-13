@@ -2,6 +2,7 @@ import { CrudeProductCredential } from '../credentials/CrudeProductCredential';
 import { CrudeInspectionCredential } from '../credentials/CrudeInspectionCredential';
 import { QPInbondCredential } from '../credentials/QPInbondCredential';
 import { BillOfLadingCredential } from '../credentials/BillOfLadingCredential';
+import { UniversityDegreeCredential } from '../credentials/UniversityDegreeCredential';
 
 export const credentialOptions= [
   {
@@ -23,5 +24,10 @@ export const credentialOptions= [
     id: 3,
     label: 'BillOfLadingCredential',
     value: BillOfLadingCredential
+  },
+  {
+    id: 4,
+    label: 'UniversityDegreeCredential',
+    value: UniversityDegreeCredential
   }
 ]
