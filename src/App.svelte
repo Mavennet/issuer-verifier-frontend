@@ -15,7 +15,8 @@
 	import { 
 		getCredentialQuery, 
 		getVerifiablePresentation, 
-		getOptions 
+		getOptions,
+		getVerifierSendObj
 	} from './helpers';
 
 	import { credentialOptions } from './options/credentialOptions';
@@ -26,7 +27,8 @@
 		ISSUER_MESSAGE, 
 		VERIFIER_MESSAGE, 
 		FORM_MESSAGE,
-		SNACKBAR_TYPE
+		SNACKBAR_TYPE,
+		VERIFIERS
 	} from './consts';
 
 
@@ -37,7 +39,7 @@
 	let	
 		selectedTab = 0,
 		vcChoice,
-		issuer,
+		issuer = {},
 		polyfillInstance = null,
 		isLoading = false,
 		selectedVerifier,
@@ -92,7 +94,10 @@
 		}
 
 		const credential = credentialOptions.find(vc => vc.id === parseInt(vcChoice)).value;
-		const options = getOptions(issuer, 'assertionMethod', issuer);
+
+		//TODO: check for method in the future;
+		const issuerInfo = issuerOptions.find(issuerItem => issuerItem.did === issuer);
+		const options = getOptions(issuerInfo.did, 'assertionMethod', issuerInfo.methods.assertionMethod);
 
 		try {
 			isLoading = true;
@@ -121,7 +126,7 @@
 			return;
 		}
 		const type = credentialOptions.find(vc => vc.id === parseInt(vcChoice)).label;
-		const apiUrl = verifierOptions.find(verifier => verifier.id === parseInt(selectedVerifier)).url;
+		const apiUrl = verifierOptions.find(verifier => verifier.id === selectedVerifier).url;
 		const credentialQuery = getCredentialQuery(type);
 
 		try {
@@ -130,9 +135,11 @@
 			if(!webCredential) {
       	throw new Error('Get credential operation did not succeed');
 			}
-			const { data } = await axios.post(apiUrl, { verifiableCredential: webCredential.data.verifiableCredential });
 
+			const sendData = getVerifierSendObj(webCredential.data.verifiableCredential, selectedVerifier);
 			
+			const { data } = await axios.post(apiUrl, sendData);
+
 			showSnackbar(SNACKBAR_TYPE.SUCCESS, VERIFIER_MESSAGE.SUCCESS);
 		} catch(err) {
 			console.log('Error getting and verifying VC', err);
@@ -196,7 +203,7 @@
 						</Select>
 						<Select enhanced variant="outlined" bind:value={issuer} label="Issuer*" class="content__input">
 							{#each issuerOptions as issuerItem}
-								<Option value={issuerItem} selected={issuerItem === issuer}>{issuerItem}</Option>
+								<Option value={issuerItem.did} selected={issuerItem.did === issuer}>{issuerItem.did}</Option>
 							{/each}
 						</Select>
 						<button class="content__submit" on:click={handleIssueVc}>

@@ -19,3 +19,8 @@ export const SNACKBAR_TYPE = {
   WARNING: 'warning',
   ERROR: 'error'
 };
+
+export const VERIFIERS = {
+  MAVENNET: 'mavennet',
+  TRANSMUTE: 'transmute'
+};
