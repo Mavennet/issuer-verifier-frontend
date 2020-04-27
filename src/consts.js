@@ -27,5 +27,6 @@ export const VERIFIERS = {
   TRANSMUTE: 'transmute',
   DANUBE_TECH: 'danube_tech',
   DIGITAL_BAZAAR: 'digital_bazar',
-  SECURE_KEY: 'secure_key'
+  SECURE_KEY: 'secure_key',
+  FACTOM: 'factom'
 };

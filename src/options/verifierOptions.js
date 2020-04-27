@@ -31,4 +31,10 @@ export const verifierOptions = [
     src: 'digital_bazaar.png',
     url: 'https://verifier.interop.digitalbazaar.com/verifier/credentials'
   },
+  {
+    id: VERIFIERS.FACTOM,
+    alt: 'Factom Verifier Logo',
+    src: 'factom_logo.png',
+    url: 'https://vc.api.factom.sphereon.com/services/verify/credentials'
+  },
 ];

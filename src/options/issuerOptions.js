@@ -169,4 +169,28 @@ export const issuerOptions = {
       },
     ],
   },
+  "Factom": {
+    verify_credential_endpoint:
+      "https://vc.api.factom.sphereon.com/services/verify/credentials",
+    verify_presentation_endpoint:
+      "https://vc.api.factom.sphereon.com/services/verify/presentations",
+    src: 'factom_logo.png',
+    alt: 'company logo', 
+    issuers: [
+      {
+        name: 'DID Issuers',
+        endpoint: 'https://vc.api.factom.sphereon.com/services/issue/credentials',
+        options: [
+          {
+            issuer: 'did:factom:5d0dd58757119dd437c70d92b44fbf86627ee275f0f2146c3d99e441da342d9f',
+            assertionMethod: 'did:factom:5d0dd58757119dd437c70d92b44fbf86627ee275f0f2146c3d99e441da342d9f#key-0',
+          },
+          {
+            issuer: 'did:v1:test:nym:z6MkvSbsrm44VnhngbyW2rZk2u9bvSPUSmJwqYjMd4RSJT7A',
+            assertionMethod: 'did:v1:test:nym:z6MkvSbsrm44VnhngbyW2rZk2u9bvSPUSmJwqYjMd4RSJT7A#z6MkjFhRvbXfjmQ8iFHeYh42cNS7v4CtguLzvwZSXcHe8zqy',
+          },
+        ],
+      },
+    ],
+  },
 };

@@ -123,6 +123,7 @@
 		const assertionMethod = correctOption.assertionMethod;
 
 		const options = getOptions(issuer, 'assertionMethod', assertionMethod);
+		console.log(JSON.stringify({ credential, options }, null, 2));
 		try {
 			isLoading = true;
 			const { data } = await axios.post(endPoint, { credential, options } );
@@ -156,6 +157,7 @@
 		try {
 			isLoading = true;
 			const webCredential = await navigator.credentials.get(credentialQuery);
+			console.log(webCredential.data)
 			if(!webCredential) {
       	throw new Error('Get credential operation did not succeed');
 			}
@@ -231,13 +233,8 @@
 				{#if selectedTab === 0}
 					<div class="content" in:fly="{{ x: -200, duration: 700 }}">
 						<h1 class="content__title">Add To Wallet</h1>
-						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
-							{#each credentialOptions as credential}
-								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
-							{/each}
-						</Select>
 						<div class="content__verifiers">
-							<h2 class="verifiers__title">Select a Campany</h2>
+							<h2 class="verifiers__title">Select an Issuer</h2>
 							<ul class="verifiers__list">
 								{#each Object.keys(issuerOptions) as issuerCompanyItem}
 									<li class="list__item">
@@ -251,6 +248,11 @@
 								{/each}
 							</ul>
 						</div>
+						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
+							{#each credentialOptions as credential}
+								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
+							{/each}
+						</Select>
 						<Select enhanced variant="outlined" bind:value={selectedIssuerName} on:change="{() => console.log('teste')}" label="Issuer Name" class="content__input">
 							{#each issuerNameOpt as issuerName}
 								<Option value={issuerName} selected={issuerName === selectedIssuerName}>{issuerName}</Option>
@@ -277,12 +279,6 @@
 				{:else if selectedTab === 1}
 					<div class="content" in:fly="{{ x: 200, duration: 700 }}">
 						<h1 class="content__title">Verify From Wallet</h1>
-						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
-							{#each credentialOptions as credential}
-								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
-							{/each}
-						</Select>
-
 						<div class="content__verifiers">
 							<h2 class="verifiers__title">Select a verifier</h2>
 							<ul class="verifiers__list">
@@ -298,6 +294,11 @@
 								{/each}
 							</ul>
 						</div>
+						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
+							{#each credentialOptions as credential}
+								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
+							{/each}
+						</Select>
 						<button class="content__submit" on:click={handleVerifyVc}>
 							{#if isLoading}
 								<LoadingSpinner />
