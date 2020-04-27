@@ -253,21 +253,16 @@
 								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
 							{/each}
 						</Select>
-						<Select enhanced variant="outlined" bind:value={selectedIssuerName} on:change="{() => console.log('teste')}" label="Issuer Name" class="content__input">
+						<Select enhanced variant="outlined" disabled={!selectedIssuerCompany} bind:value={selectedIssuerName} on:change="{() => console.log('teste')}" label="Issuer Name" class="content__input">
 							{#each issuerNameOpt as issuerName}
 								<Option value={issuerName} selected={issuerName === selectedIssuerName}>{issuerName}</Option>
 							{/each}
 						</Select>
-						<Select enhanced variant="outlined" bind:value={issuer} label="Issuer" class="content__input content__input--last">
+						<Select enhanced variant="outlined" disabled={!selectedIssuerName} bind:value={issuer} label="Issuer" class="content__input content__input--last">
 							{#each issuerDidOpt as did}
 								<Option value={did} selected={did === issuer}>{did}</Option>
 							{/each}
 						</Select>
-						<!-- <Select enhanced variant="outlined" bind:value={issuer} label="Issuer*" class="content__input">
-							{#each issuerOptions as issuerItem}
-								<Option value={issuerItem.did} selected={issuerItem.did === issuer}>{issuerItem.did}</Option>
-							{/each}
-						</Select> -->
 						<button class="content__submit" on:click={handleIssueVc}>
 							{#if isLoading}
 								<LoadingSpinner />
