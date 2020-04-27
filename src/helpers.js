@@ -50,7 +50,17 @@ export const getVerifierSendObj = (credential, verifier) => {
       return ({
         credential: credential
       });
+    case VERIFIERS.DANUBE_TECH:
+      return ({
+        verifiableCredential: credential
+      });
+    case VERIFIERS.FACTOM:
+      return ({
+        verifiableCredential: credential
+      });
     default:
-      return null;
+      return ({
+        credential: credential
+      });
   }
 };

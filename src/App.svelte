@@ -39,13 +39,28 @@
 	let	
 		selectedTab = 0,
 		vcChoice,
-		issuer = {},
+		issuer = '',
 		polyfillInstance = null,
 		isLoading = false,
 		selectedVerifier,
+		selectedIssuerCompany,
+		selectedIssuerName,
 		isSnackbarShowing = false,
 		snackbarMessage,
 		snackbarType;
+
+	let
+		issuerNameOpt = [],
+		issuerDidOpt = [];
+
+	$: if (selectedIssuerCompany && selectedIssuerName) {
+		const options = issuerOptions[selectedIssuerCompany].issuers.find(item => item.name === selectedIssuerName).options 
+		issuerDidOpt = options.map(options => options.issuer);
+		issuer = '';
+	} else {
+		issuerDidOpt = [];
+		issuer = '';
+	}
 
 
 	onMount(async () => {
@@ -66,6 +81,12 @@
 	function validateIssueForm() {
 		if (!vcChoice) {
 			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.TYPE);
+			return false;
+		} else if (!selectedIssuerCompany) {
+			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.COMPANY);
+			return false;
+		} else if (!selectedIssuerName) {
+			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.NAME);
 			return false;
 		} else if (!issuer) {
 			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.ISSUER);
@@ -96,12 +117,16 @@
 		const credential = credentialOptions.find(vc => vc.label === vcChoice).value;
 
 		//TODO: check for method in the future;
-		const issuerInfo = issuerOptions.find(issuerItem => issuerItem.did === issuer);
-		const options = getOptions(issuerInfo.did, 'assertionMethod', issuerInfo.methods.assertionMethod);
+		const correctIssuer = issuerOptions[selectedIssuerCompany].issuers.find(item => item.name === selectedIssuerName);
+		const endPoint = correctIssuer.endpoint;
+		const correctOption = correctIssuer.options.find(option => option.issuer === issuer);
+		const assertionMethod = correctOption.assertionMethod;
 
+		const options = getOptions(issuer, 'assertionMethod', assertionMethod);
+		console.log(JSON.stringify({ credential, options }, null, 2));
 		try {
 			isLoading = true;
-			const { data } = await axios.post('https://api.neo-flow.com/credentials/issueCredential', { credential, options } );
+			const { data } = await axios.post(endPoint, { credential, options } );
 
 			const vp = getVerifiablePresentation(data);
 
@@ -132,13 +157,18 @@
 		try {
 			isLoading = true;
 			const webCredential = await navigator.credentials.get(credentialQuery);
+			console.log(webCredential.data)
 			if(!webCredential) {
       	throw new Error('Get credential operation did not succeed');
 			}
 
 			const sendData = getVerifierSendObj(webCredential.data.verifiableCredential, selectedVerifier);
 			
-			const { data } = await axios.post(apiUrl, sendData);
+			const { data } = await axios.post(apiUrl, sendData, {
+				headers: {
+            'Content-Type': 'application/json',
+        }
+			});
 
 			showSnackbar(SNACKBAR_TYPE.SUCCESS, VERIFIER_MESSAGE.SUCCESS);
 		} catch(err) {
@@ -158,6 +188,13 @@
 
 	function selectVerifier(id) {
 		selectedVerifier = id;
+	}
+
+	function selectIssuerCompany(key) {
+		selectedIssuerCompany = key;
+		selectedIssuerName = '';
+		issuerNameOpt = issuerOptions[selectedIssuerCompany].issuers.map(issuer => issuer.name);
+		issuer = '';
 	}
 
 	function setDisplaySnackBar(value) {
@@ -196,16 +233,41 @@
 				{#if selectedTab === 0}
 					<div class="content" in:fly="{{ x: -200, duration: 700 }}">
 						<h1 class="content__title">Add To Wallet</h1>
+						<div class="content__verifiers">
+							<h2 class="verifiers__title">Select an Issuer</h2>
+							<ul class="verifiers__list">
+								{#each Object.keys(issuerOptions) as issuerCompanyItem}
+									<li class="list__item">
+										<img 
+											class="item__logo" 
+											src={`./assets/images/${issuerOptions[issuerCompanyItem].src}`} 
+											alt={issuerOptions[issuerCompanyItem].alt}
+											class:item__logo--active="{selectedIssuerCompany === issuerCompanyItem}"
+											on:click={() => selectIssuerCompany(issuerCompanyItem)}>
+									</li>
+								{/each}
+							</ul>
+						</div>
 						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
 							{#each credentialOptions as credential}
 								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
 							{/each}
 						</Select>
-						<Select enhanced variant="outlined" bind:value={issuer} label="Issuer*" class="content__input">
+						<Select enhanced variant="outlined" bind:value={selectedIssuerName} on:change="{() => console.log('teste')}" label="Issuer Name" class="content__input">
+							{#each issuerNameOpt as issuerName}
+								<Option value={issuerName} selected={issuerName === selectedIssuerName}>{issuerName}</Option>
+							{/each}
+						</Select>
+						<Select enhanced variant="outlined" bind:value={issuer} label="Issuer" class="content__input">
+							{#each issuerDidOpt as did}
+								<Option value={did} selected={did === issuer}>{did}</Option>
+							{/each}
+						</Select>
+						<!-- <Select enhanced variant="outlined" bind:value={issuer} label="Issuer*" class="content__input">
 							{#each issuerOptions as issuerItem}
 								<Option value={issuerItem.did} selected={issuerItem.did === issuer}>{issuerItem.did}</Option>
 							{/each}
-						</Select>
+						</Select> -->
 						<button class="content__submit" on:click={handleIssueVc}>
 							{#if isLoading}
 								<LoadingSpinner />
@@ -217,12 +279,6 @@
 				{:else if selectedTab === 1}
 					<div class="content" in:fly="{{ x: 200, duration: 700 }}">
 						<h1 class="content__title">Verify From Wallet</h1>
-						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
-							{#each credentialOptions as credential}
-								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
-							{/each}
-						</Select>
-
 						<div class="content__verifiers">
 							<h2 class="verifiers__title">Select a verifier</h2>
 							<ul class="verifiers__list">
@@ -238,6 +294,11 @@
 								{/each}
 							</ul>
 						</div>
+						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
+							{#each credentialOptions as credential}
+								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
+							{/each}
+						</Select>
 						<button class="content__submit" on:click={handleVerifyVc}>
 							{#if isLoading}
 								<LoadingSpinner />
@@ -290,7 +351,7 @@
 
 		font-family: 'Roboto', sans-serif;
 
-		height: 419px;
+		/* height: 419px; */
 		width: 480px;
 		border-radius: 5px 5px 0 0;
 		background-color: var(--clr-background);

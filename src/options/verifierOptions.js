@@ -11,6 +11,30 @@ export const verifierOptions = [
     id: VERIFIERS.TRANSMUTE,
     alt: 'Transmute Verifier Logo',
     src: 'transmute_verifier.png',
-    url: 'https://vc.transmute.world/verifier/credentials'
+    url: 'https://vc.transmute.world/v0.1.0/verify/credentials'
+  },
+  {
+    id: VERIFIERS.SECURE_KEY,
+    alt: 'Secure Key Verifier Logo',
+    src: 'secure_key.png',
+    url: 'https://verifier.sandbox.trustbloc.dev/verifier/credentials'
+  },
+  {
+    id: VERIFIERS.DANUBE_TECH,
+    alt: 'Danube Tech Verifier Logo',
+    src: 'danube_tech.png',
+    url: 'https://univerifier.io/api/verifier/credentials'
+  },
+  {
+    id: VERIFIERS.DIGITAL_BAZAAR,
+    alt: 'Digital Bazaar Verifier Logo',
+    src: 'digital_bazaar.png',
+    url: 'https://verifier.interop.digitalbazaar.com/verifier/credentials'
+  },
+  {
+    id: VERIFIERS.FACTOM,
+    alt: 'Factom Verifier Logo',
+    src: 'factom_logo.png',
+    url: 'https://vc.api.factom.sphereon.com/services/verify/credentials'
   },
 ];
