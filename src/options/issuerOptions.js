@@ -1,59 +1,41 @@
 export const issuerOptions = {
-  "Danube Tech": {
-    verify_credential_endpoint:
-      "https://univerifier.io/api/verifier/credentials",
+  "Mavennet": {
+    verify_credential_endpoint: "https://api.neo-flow.com/verifier/credentials",
     verify_presentation_endpoint:
-      "https://univerifier.io/api/verifier/presentations",
-    src: 'danube_tech.png',
-    alt: 'company logo',
-    issuers: [
-      {
-        name: "Universal Issuer (did:sov)",
-        endpoint: "https://uniissuer.io/api/credentials/issueCredential",
-        options: [
-          {
-            issuer: "did:sov:danube:VZoG2R1UneUscisG1eLxJb",
-            assertionMethod: "did:sov:danube:VZoG2R1UneUscisG1eLxJb#key-1",
-          },
-        ],
-      },
-      {
-        name: "Universal Issuer (div:v1)",
-        endpoint: "https://uniissuer.io/api/credentials/issueCredential",
-        options: [
-          {
-            issuer:
-              "did:v1:test:nym:z6MktyAYL7sVcmPQPTbbMqrnGMNwp6zkvRvKREs94f81fA1K",
-            assertionMethod:
-              "did:v1:test:nym:z6MktyAYL7sVcmPQPTbbMqrnGMNwp6zkvRvKREs94f81fA1K#z6MkgumSeJ8FGqFjXFPJSsT2EFCNYVvx5RXDQ6oBYDrmtiDb",
-          },
-        ],
-      },
-    ],
-  },
-  "Digital Bazaar": {
-    verify_credential_endpoint:
-      "https://verifier.interop.digitalbazaar.com/verifier/credentials",
-    verify_presentation_endpoint:
-      "https://verifier.interop.digitalbazaar.com/verifier/presentations",
-    src: 'digital_bazaar.png',
+      "https://api.neo-flow.com/verifier/presentations",
+    src: 'mavennet_verifier.png',
     alt: 'company logo', 
     issuers: [
       {
         name: "DID Key Issuer",
-        endpoint:
-          "https://issuer.interop.digitalbazaar.com/credentials/did%3Akey%3Az6MkkHSTSr9DSNLoioiVEZq8RKm9Sn1Xs4SjZXgzQASBMdc3/issueCredential",
+        endpoint: "https://api.neo-flow.com/credentials/issueCredential",
         options: [
           {
-            issuer: "did:key:z6Mkg9AkjefxdJFSphkStzXwHQnbweN43mCqA37aANGRxF1o",
+            issuer: "did:key:z6MkiTsvjrrPNDZ1rrg9QDEYCFWCmEswT6U2cEkScb7edQ9b",
             assertionMethod:
-              "did:key:z6Mkg9AkjefxdJFSphkStzXwHQnbweN43mCqA37aANGRxF1o#z6Mkg9AkjefxdJFSphkStzXwHQnbweN43mCqA37aANGRxF1o",
+              "did:key:z6MkiTsvjrrPNDZ1rrg9QDEYCFWCmEswT6U2cEkScb7edQ9b#z6MkiTsvjrrPNDZ1rrg9QDEYCFWCmEswT6U2cEkScb7edQ9b",
+            authenticationMethod:
+              "did:key:z6MkiTsvjrrPNDZ1rrg9QDEYCFWCmEswT6U2cEkScb7edQ9b#z6MkiTsvjrrPNDZ1rrg9QDEYCFWCmEswT6U2cEkScb7edQ9b",
+          },
+        ],
+      },
+      {
+        name: "DID Test Issuer",
+        endpoint: "https://api.neo-flow.com/credentials/issueCredential",
+        options: [
+          {
+            issuer:
+              "did:v1:test:nym:z6MkfG5HTrBXzsAP8AbayNpG3ZaoyM4PCqNPrdWQRSpHDV6J",
+            assertionMethod:
+              "did:v1:test:nym:z6MkfG5HTrBXzsAP8AbayNpG3ZaoyM4PCqNPrdWQRSpHDV6J#z6MkqfvdBsFw4QdGrZrnx7L1EKfY5zh9tT4gumUGsMMEZHY3",
+            authenticationMethod:
+              "did:v1:test:nym:z6MkfG5HTrBXzsAP8AbayNpG3ZaoyM4PCqNPrdWQRSpHDV6J#z6MkvQkEMVaaQcRhP62XfjUGn7gSkVCprvB3pyUubmBS85Yk",
           },
         ],
       },
     ],
   },
-  Transmute: {
+  "Transmute": {
     verify_credential_endpoint:
       "https://vc.transmute.world/v0.1.0/verify/credentials",
     verify_presentation_endpoint:
@@ -133,37 +115,55 @@ export const issuerOptions = {
       },
     ],
   },
-  Mavennet: {
-    verify_credential_endpoint: "https://api.neo-flow.com/verifier/credentials",
+  "Danube Tech": {
+    verify_credential_endpoint:
+      "https://univerifier.io/api/verifier/credentials",
     verify_presentation_endpoint:
-      "https://api.neo-flow.com/verifier/presentations",
-    src: 'mavennet_verifier.png',
-    alt: 'company logo', 
+      "https://univerifier.io/api/verifier/presentations",
+    src: 'danube_tech.png',
+    alt: 'company logo',
     issuers: [
       {
-        name: "DID Key Issuer",
-        endpoint: "https://api.neo-flow.com/credentials/issueCredential",
+        name: "Universal Issuer (did:sov)",
+        endpoint: "https://uniissuer.io/api/credentials/issueCredential",
         options: [
           {
-            issuer: "did:key:z6MkiTsvjrrPNDZ1rrg9QDEYCFWCmEswT6U2cEkScb7edQ9b",
-            assertionMethod:
-              "did:key:z6MkiTsvjrrPNDZ1rrg9QDEYCFWCmEswT6U2cEkScb7edQ9b#z6MkiTsvjrrPNDZ1rrg9QDEYCFWCmEswT6U2cEkScb7edQ9b",
-            authenticationMethod:
-              "did:key:z6MkiTsvjrrPNDZ1rrg9QDEYCFWCmEswT6U2cEkScb7edQ9b#z6MkiTsvjrrPNDZ1rrg9QDEYCFWCmEswT6U2cEkScb7edQ9b",
+            issuer: "did:sov:danube:VZoG2R1UneUscisG1eLxJb",
+            assertionMethod: "did:sov:danube:VZoG2R1UneUscisG1eLxJb#key-1",
           },
         ],
       },
       {
-        name: "DID Test Issuer",
-        endpoint: "https://api.neo-flow.com/credentials/issueCredential",
+        name: "Universal Issuer (div:v1)",
+        endpoint: "https://uniissuer.io/api/credentials/issueCredential",
         options: [
           {
             issuer:
-              "did:v1:test:nym:z6MkfG5HTrBXzsAP8AbayNpG3ZaoyM4PCqNPrdWQRSpHDV6J",
+              "did:v1:test:nym:z6MktyAYL7sVcmPQPTbbMqrnGMNwp6zkvRvKREs94f81fA1K",
             assertionMethod:
-              "did:v1:test:nym:z6MkfG5HTrBXzsAP8AbayNpG3ZaoyM4PCqNPrdWQRSpHDV6J#z6MkqfvdBsFw4QdGrZrnx7L1EKfY5zh9tT4gumUGsMMEZHY3",
-            authenticationMethod:
-              "did:v1:test:nym:z6MkfG5HTrBXzsAP8AbayNpG3ZaoyM4PCqNPrdWQRSpHDV6J#z6MkvQkEMVaaQcRhP62XfjUGn7gSkVCprvB3pyUubmBS85Yk",
+              "did:v1:test:nym:z6MktyAYL7sVcmPQPTbbMqrnGMNwp6zkvRvKREs94f81fA1K#z6MkgumSeJ8FGqFjXFPJSsT2EFCNYVvx5RXDQ6oBYDrmtiDb",
+          },
+        ],
+      },
+    ],
+  },
+  "Digital Bazaar": {
+    verify_credential_endpoint:
+      "https://verifier.interop.digitalbazaar.com/verifier/credentials",
+    verify_presentation_endpoint:
+      "https://verifier.interop.digitalbazaar.com/verifier/presentations",
+    src: 'digital_bazaar.png',
+    alt: 'company logo', 
+    issuers: [
+      {
+        name: "DID Key Issuer",
+        endpoint:
+          "https://issuer.interop.digitalbazaar.com/credentials/did%3Akey%3Az6MkkHSTSr9DSNLoioiVEZq8RKm9Sn1Xs4SjZXgzQASBMdc3/issueCredential",
+        options: [
+          {
+            issuer: "did:key:z6Mkg9AkjefxdJFSphkStzXwHQnbweN43mCqA37aANGRxF1o",
+            assertionMethod:
+              "did:key:z6Mkg9AkjefxdJFSphkStzXwHQnbweN43mCqA37aANGRxF1o#z6Mkg9AkjefxdJFSphkStzXwHQnbweN43mCqA37aANGRxF1o",
           },
         ],
       },

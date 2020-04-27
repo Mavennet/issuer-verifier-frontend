@@ -14,6 +14,12 @@ export const verifierOptions = [
     url: 'https://vc.transmute.world/v0.1.0/verify/credentials'
   },
   {
+    id: VERIFIERS.SECURE_KEY,
+    alt: 'Secure Key Verifier Logo',
+    src: 'secure_key.png',
+    url: 'https://verifier.sandbox.trustbloc.dev/verifier/credentials'
+  },
+  {
     id: VERIFIERS.DANUBE_TECH,
     alt: 'Danube Tech Verifier Logo',
     src: 'danube_tech.png',
@@ -24,11 +30,5 @@ export const verifierOptions = [
     alt: 'Digital Bazaar Verifier Logo',
     src: 'digital_bazaar.png',
     url: 'https://verifier.interop.digitalbazaar.com/verifier/credentials'
-  },
-  {
-    id: VERIFIERS.SECURE_KEY,
-    alt: 'Secure Key Verifier Logo',
-    src: 'secure_key.png',
-    url: 'https://verifier.sandbox.trustbloc.dev/verifier/credentials'
   },
 ];
