@@ -54,8 +54,12 @@
 		issuerDidOpt = [];
 
 	$: if (selectedIssuerCompany && selectedIssuerName) {
-		const issuerOptions = issuerOptions[selectedIssuerCompany].issuers.find(item => item.name === selectedIssuerName).options 
-		issuerDidOpt = issuerOptions.map(options => options.issuer);
+		const options = issuerOptions[selectedIssuerCompany].issuers.find(item => item.name === selectedIssuerName).options 
+		issuerDidOpt = options.map(options => options.issuer);
+		issuer = '';
+	} else {
+		issuerDidOpt = [];
+		issuer = '';
 	}
 
 
@@ -75,14 +79,19 @@
 	}
 
 	function validateIssueForm() {
-		// TODO validate form
-		// if (!vcChoice) {
-		// 	showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.TYPE);
-		// 	return false;
-		// } else if (!issuer) {
-		// 	showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.ISSUER);
-		// 	return false;
-		// }
+		if (!vcChoice) {
+			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.TYPE);
+			return false;
+		} else if (!selectedIssuerCompany) {
+			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.COMPANY);
+			return false;
+		} else if (!selectedIssuerName) {
+			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.NAME);
+			return false;
+		} else if (!issuer) {
+			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.ISSUER);
+			return false;
+		}
 
 		return true;
 	}
@@ -108,12 +117,15 @@
 		const credential = credentialOptions.find(vc => vc.label === vcChoice).value;
 
 		//TODO: check for method in the future;
-		const issuerInfo = issuerOptions.find(issuerItem => issuerItem.did === issuer);
-		const options = getOptions(issuerInfo.did, 'assertionMethod', issuerInfo.methods.assertionMethod);
+		const correctIssuer = issuerOptions[selectedIssuerCompany].issuers.find(item => item.name === selectedIssuerName);
+		const endPoint = correctIssuer.endpoint;
+		const correctOption = correctIssuer.options.find(option => option.issuer === issuer);
+		const assertionMethod = correctOption.assertionMethod;
 
+		const options = getOptions(issuer, 'assertionMethod', assertionMethod);
 		try {
 			isLoading = true;
-			const { data } = await axios.post('https://api.neo-flow.com/credentials/issueCredential', { credential, options } );
+			const { data } = await axios.post(endPoint, { credential, options } );
 
 			const vp = getVerifiablePresentation(data);
 
@@ -150,7 +162,11 @@
 
 			const sendData = getVerifierSendObj(webCredential.data.verifiableCredential, selectedVerifier);
 			
-			const { data } = await axios.post(apiUrl, sendData);
+			const { data } = await axios.post(apiUrl, sendData, {
+				headers: {
+            'Content-Type': 'application/json',
+        }
+			});
 
 			showSnackbar(SNACKBAR_TYPE.SUCCESS, VERIFIER_MESSAGE.SUCCESS);
 		} catch(err) {
@@ -174,8 +190,9 @@
 
 	function selectIssuerCompany(key) {
 		selectedIssuerCompany = key;
+		selectedIssuerName = '';
 		issuerNameOpt = issuerOptions[selectedIssuerCompany].issuers.map(issuer => issuer.name);
-		// TODO: reset all values
+		issuer = '';
 	}
 
 	function setDisplaySnackBar(value) {

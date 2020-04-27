@@ -11,6 +11,8 @@ export const VERIFIER_MESSAGE = {
 export const FORM_MESSAGE = {
   TYPE: 'Please select a credential type',
   ISSUER: 'Please select an issuer',
+  COMPANY: 'Please select a company',
+  NAME: 'Please select a name',
   VERIFIER: 'Please select a verifier'
 };
 
@@ -22,5 +24,8 @@ export const SNACKBAR_TYPE = {
 
 export const VERIFIERS = {
   MAVENNET: 'mavennet',
-  TRANSMUTE: 'transmute'
+  TRANSMUTE: 'transmute',
+  DANUBE_TECH: 'danube_tech',
+  DIGITAL_BAZAAR: 'digital_bazar',
+  SECURE_KEY: 'secure_key'
 };

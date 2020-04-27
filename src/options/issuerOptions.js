@@ -4,7 +4,7 @@ export const issuerOptions = {
       "https://univerifier.io/api/verifier/credentials",
     verify_presentation_endpoint:
       "https://univerifier.io/api/verifier/presentations",
-    src: 'mavennet_verifier.png',
+    src: 'danube_tech.png',
     alt: 'company logo',
     issuers: [
       {
@@ -36,7 +36,7 @@ export const issuerOptions = {
       "https://verifier.interop.digitalbazaar.com/verifier/credentials",
     verify_presentation_endpoint:
       "https://verifier.interop.digitalbazaar.com/verifier/presentations",
-    src: 'mavennet_verifier.png',
+    src: 'digital_bazaar.png',
     alt: 'company logo', 
     issuers: [
       {
@@ -58,7 +58,7 @@ export const issuerOptions = {
       "https://vc.transmute.world/v0.1.0/verify/credentials",
     verify_presentation_endpoint:
       "https://vc.transmute.world/v0.1.0/verify/presentations",
-    src: 'mavennet_verifier.png',
+    src: 'transmute_verifier.png',
     alt: 'company logo', 
     issuers: [
       {
@@ -103,7 +103,7 @@ export const issuerOptions = {
       "https://verifier.sandbox.trustbloc.dev/verifier/credentials",
     verify_presentation_endpoint:
       "https://verifier.sandbox.trustbloc.dev/verifier/presentations",
-    src: 'mavennet_verifier.png',
+    src: 'secure_key.png',
     alt: 'company logo', 
     issuers: [
       {
