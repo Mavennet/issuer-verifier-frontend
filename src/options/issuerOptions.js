@@ -4,7 +4,7 @@ export const issuerOptions = {
     verify_presentation_endpoint:
       "https://api.neo-flow.com/verifier/presentations",
     src: 'mavennet_verifier.png',
-    alt: 'company logo', 
+    alt: 'Mavennet Logo', 
     issuers: [
       {
         name: "DID Key Issuer",
@@ -41,7 +41,7 @@ export const issuerOptions = {
     verify_presentation_endpoint:
       "https://vc.transmute.world/v0.1.0/verify/presentations",
     src: 'transmute_verifier.png',
-    alt: 'company logo', 
+    alt: 'Transmute Logo', 
     issuers: [
       {
         name: "DID Web Issuer",
@@ -86,7 +86,7 @@ export const issuerOptions = {
     verify_presentation_endpoint:
       "https://verifier.sandbox.trustbloc.dev/verifier/presentations",
     src: 'secure_key.png',
-    alt: 'company logo', 
+    alt: 'Secure Key Logo', 
     issuers: [
       {
         name: "TrustBloc Issuer - TrustBloc DID",
@@ -121,7 +121,7 @@ export const issuerOptions = {
     verify_presentation_endpoint:
       "https://univerifier.io/api/verifier/presentations",
     src: 'danube_tech.png',
-    alt: 'company logo',
+    alt: 'Danube Tech Logo',
     issuers: [
       {
         name: "Universal Issuer (did:sov)",
@@ -153,7 +153,7 @@ export const issuerOptions = {
     verify_presentation_endpoint:
       "https://verifier.interop.digitalbazaar.com/verifier/presentations",
     src: 'digital_bazaar.png',
-    alt: 'company logo', 
+    alt: 'Digital Bazaar Logo', 
     issuers: [
       {
         name: "DID Key Issuer",
@@ -175,7 +175,7 @@ export const issuerOptions = {
     verify_presentation_endpoint:
       "https://vc.api.factom.sphereon.com/services/verify/presentations",
     src: 'factom_logo.png',
-    alt: 'company logo', 
+    alt: 'Factom Logo', 
     issuers: [
       {
         name: 'DID Issuers',

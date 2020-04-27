@@ -258,7 +258,7 @@
 								<Option value={issuerName} selected={issuerName === selectedIssuerName}>{issuerName}</Option>
 							{/each}
 						</Select>
-						<Select enhanced variant="outlined" bind:value={issuer} label="Issuer" class="content__input">
+						<Select enhanced variant="outlined" bind:value={issuer} label="Issuer" class="content__input content__input--last">
 							{#each issuerDidOpt as did}
 								<Option value={did} selected={did === issuer}>{did}</Option>
 							{/each}
@@ -294,7 +294,7 @@
 								{/each}
 							</ul>
 						</div>
-						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
+						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input content__input--last">
 							{#each credentialOptions as credential}
 								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
 							{/each}
@@ -331,12 +331,10 @@
 		flex-direction: column;
 		justify-content: flex-start;
 		align-items: center;
-
-		margin-top: -128px;
 	}
 
 	.logo {
-		margin-bottom: 62px;
+		margin-bottom: 20px;
 	}
 
 	.card {
@@ -411,6 +409,10 @@
 	}
 
 	* :global(select, .content__input) {
+		margin-bottom: 12px;
+	}
+
+	* :global(select, .content__input--last) {
 		margin-bottom: 31px;
 	}
 
