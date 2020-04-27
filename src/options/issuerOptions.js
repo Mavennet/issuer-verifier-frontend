@@ -4,6 +4,8 @@ export const issuerOptions = {
       "https://univerifier.io/api/verifier/credentials",
     verify_presentation_endpoint:
       "https://univerifier.io/api/verifier/presentations",
+    src: 'mavennet_verifier.png',
+    alt: 'company logo',
     issuers: [
       {
         name: "Universal Issuer (did:sov)",
@@ -34,6 +36,8 @@ export const issuerOptions = {
       "https://verifier.interop.digitalbazaar.com/verifier/credentials",
     verify_presentation_endpoint:
       "https://verifier.interop.digitalbazaar.com/verifier/presentations",
+    src: 'mavennet_verifier.png',
+    alt: 'company logo', 
     issuers: [
       {
         name: "DID Key Issuer",
@@ -54,6 +58,8 @@ export const issuerOptions = {
       "https://vc.transmute.world/v0.1.0/verify/credentials",
     verify_presentation_endpoint:
       "https://vc.transmute.world/v0.1.0/verify/presentations",
+    src: 'mavennet_verifier.png',
+    alt: 'company logo', 
     issuers: [
       {
         name: "DID Web Issuer",
@@ -97,6 +103,8 @@ export const issuerOptions = {
       "https://verifier.sandbox.trustbloc.dev/verifier/credentials",
     verify_presentation_endpoint:
       "https://verifier.sandbox.trustbloc.dev/verifier/presentations",
+    src: 'mavennet_verifier.png',
+    alt: 'company logo', 
     issuers: [
       {
         name: "TrustBloc Issuer - TrustBloc DID",
@@ -129,6 +137,8 @@ export const issuerOptions = {
     verify_credential_endpoint: "https://api.neo-flow.com/verifier/credentials",
     verify_presentation_endpoint:
       "https://api.neo-flow.com/verifier/presentations",
+    src: 'mavennet_verifier.png',
+    alt: 'company logo', 
     issuers: [
       {
         name: "DID Key Issuer",

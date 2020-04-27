@@ -39,13 +39,24 @@
 	let	
 		selectedTab = 0,
 		vcChoice,
-		issuer = {},
+		issuer = '',
 		polyfillInstance = null,
 		isLoading = false,
 		selectedVerifier,
+		selectedIssuerCompany,
+		selectedIssuerName,
 		isSnackbarShowing = false,
 		snackbarMessage,
 		snackbarType;
+
+	let
+		issuerNameOpt = [],
+		issuerDidOpt = [];
+
+	$: if (selectedIssuerCompany && selectedIssuerName) {
+		const issuerOptions = issuerOptions[selectedIssuerCompany].issuers.find(item => item.name === selectedIssuerName).options 
+		issuerDidOpt = issuerOptions.map(options => options.issuer);
+	}
 
 
 	onMount(async () => {
@@ -64,13 +75,14 @@
 	}
 
 	function validateIssueForm() {
-		if (!vcChoice) {
-			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.TYPE);
-			return false;
-		} else if (!issuer) {
-			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.ISSUER);
-			return false;
-		}
+		// TODO validate form
+		// if (!vcChoice) {
+		// 	showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.TYPE);
+		// 	return false;
+		// } else if (!issuer) {
+		// 	showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.ISSUER);
+		// 	return false;
+		// }
 
 		return true;
 	}
@@ -160,6 +172,12 @@
 		selectedVerifier = id;
 	}
 
+	function selectIssuerCompany(key) {
+		selectedIssuerCompany = key;
+		issuerNameOpt = issuerOptions[selectedIssuerCompany].issuers.map(issuer => issuer.name);
+		// TODO: reset all values
+	}
+
 	function setDisplaySnackBar(value) {
 		isSnackbarShowing = value;
 	}
@@ -201,11 +219,36 @@
 								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
 							{/each}
 						</Select>
-						<Select enhanced variant="outlined" bind:value={issuer} label="Issuer*" class="content__input">
+						<div class="content__verifiers">
+							<h2 class="verifiers__title">Select a Campany</h2>
+							<ul class="verifiers__list">
+								{#each Object.keys(issuerOptions) as issuerCompanyItem}
+									<li class="list__item">
+										<img 
+											class="item__logo" 
+											src={`./assets/images/${issuerOptions[issuerCompanyItem].src}`} 
+											alt={issuerOptions[issuerCompanyItem].alt}
+											class:item__logo--active="{selectedIssuerCompany === issuerCompanyItem}"
+											on:click={() => selectIssuerCompany(issuerCompanyItem)}>
+									</li>
+								{/each}
+							</ul>
+						</div>
+						<Select enhanced variant="outlined" bind:value={selectedIssuerName} on:change="{() => console.log('teste')}" label="Issuer Name" class="content__input">
+							{#each issuerNameOpt as issuerName}
+								<Option value={issuerName} selected={issuerName === selectedIssuerName}>{issuerName}</Option>
+							{/each}
+						</Select>
+						<Select enhanced variant="outlined" bind:value={issuer} label="Issuer" class="content__input">
+							{#each issuerDidOpt as did}
+								<Option value={did} selected={did === issuer}>{did}</Option>
+							{/each}
+						</Select>
+						<!-- <Select enhanced variant="outlined" bind:value={issuer} label="Issuer*" class="content__input">
 							{#each issuerOptions as issuerItem}
 								<Option value={issuerItem.did} selected={issuerItem.did === issuer}>{issuerItem.did}</Option>
 							{/each}
-						</Select>
+						</Select> -->
 						<button class="content__submit" on:click={handleIssueVc}>
 							{#if isLoading}
 								<LoadingSpinner />
@@ -290,7 +333,7 @@
 
 		font-family: 'Roboto', sans-serif;
 
-		height: 419px;
+		/* height: 419px; */
 		width: 480px;
 		border-radius: 5px 5px 0 0;
 		background-color: var(--clr-background);
