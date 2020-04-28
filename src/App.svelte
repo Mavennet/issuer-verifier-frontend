@@ -12,6 +12,7 @@
 	import Snackbar from './components/Snackbar.svelte';
 	import Switch from './components/Switch.svelte';
 	import LoadingSpinner from './components/LoadingSpinner.svelte';
+	import Checklist from './components/Checklist.svelte';
 
 	import { 
 		getCredentialQuery, 
@@ -211,6 +212,7 @@
 
 
 <div class="wrapper">
+	<Checklist></Checklist>
 	<Snackbar 
 		text={snackbarMessage} 
 		display={isSnackbarShowing} 
