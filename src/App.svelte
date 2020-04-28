@@ -10,6 +10,7 @@
 	import '@smui/textfield.css';
 
 	import Snackbar from './components/Snackbar.svelte';
+	import Switch from './components/Switch.svelte';
 	import LoadingSpinner from './components/LoadingSpinner.svelte';
 
 	import { 
@@ -39,6 +40,7 @@
 	let	
 		selectedTab = 0,
 		vcChoice,
+		isCredential = true,
 		issuer = '',
 		polyfillInstance = null,
 		isLoading = false,
@@ -47,7 +49,8 @@
 		selectedIssuerName,
 		isSnackbarShowing = false,
 		snackbarMessage,
-		snackbarType;
+		snackbarType,
+		credentialPresentation = 0;
 
 	let
 		issuerNameOpt = [],
@@ -200,6 +203,10 @@
 	function setDisplaySnackBar(value) {
 		isSnackbarShowing = value;
 	}
+
+	function handleSwitchChange(event) {
+		credentialPresentation = event.detail.id;
+	}
 </script>
 
 
@@ -289,6 +296,7 @@
 								{/each}
 							</ul>
 						</div>
+						<Switch on:selectedVerification={handleSwitchChange}></Switch>
 						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input content__input--last">
 							{#each credentialOptions as credential}
 								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
@@ -384,8 +392,8 @@
 
 	.card__content {
 		overflow: hidden;
-
-		padding: 40px 58px 48px 62px;
+		height: 500px;
+		padding: 40px 43px 48px 47px;
 	}
 
 	.content__title {
@@ -399,6 +407,7 @@
 
 	.content {
 		width: 100%;
+		height: 100%;
 		display: flex;
 		flex-direction: column;
 	}
@@ -408,7 +417,7 @@
 	}
 
 	* :global(select, .content__input--last) {
-		margin-bottom: 31px;
+		margin-bottom: 38px;
 	}
 
 	* :global(select, .mdc-select__selected-text) {
@@ -440,15 +449,7 @@
 	}
 
 	.list__item {
-		margin: 0 10px;
-	}
-
-	.list__item:first-child {
-		margin-left: 0;
-	}
-
-	.list__item:last-child {
-		margin-right: 0;
+		margin: 0 10px 5px 10px;
 	}
 
 
@@ -484,8 +485,9 @@
 		background-color: var(--clr-button-background);
 		padding: 0.9375em 1.875em;
 		border-radius: 3px;
-		margin-top: 7px;
 		cursor: pointer;
+		margin-bottom: 0;
+		margin-top: auto;
 	}
 
 	@media (max-width: 512px) {
@@ -502,6 +504,7 @@
 
 		.card__content {
 			padding: 40px 15px 48px 15px;
+			height: auto;
 		}
 
 		.content__title {
