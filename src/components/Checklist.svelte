@@ -56,8 +56,8 @@
     z-index: 99999;
     bottom: 30px;
     right: 30px;
-    width: 80px;
-    height: 80px;
+    width: 75px;
+    height: 75px;
     background-color: white;
     border-radius: 100%;
 
