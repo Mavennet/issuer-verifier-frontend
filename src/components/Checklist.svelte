@@ -1,10 +1,14 @@
 <script>
   import Checkbox from '@smui/checkbox';
   import FormField from '@smui/form-field';
+  import LinearProgress from '@smui/linear-progress';
   import {testSuit} from '../content/testSuit.js';
 
-  let isDrawerOpen = false;
-  let checkListObj = testSuit.reduce((res, curr) => ({ ...res, curr: false }), {});
+  let 
+    isDrawerOpen = false,
+    checkedAmount = 0,
+    completePercentage = 0,
+    checkListObj = testSuit.reduce((res, curr) => ({ ...res, curr: false }), {});
 
   function closeDrawer() {
     isDrawerOpen = false;
@@ -12,6 +16,13 @@
 
   function openDrawer() {
     isDrawerOpen = true;
+  }
+
+  function updateProgress(event) {
+    const { checked } = event.target;
+
+    checkedAmount = checked ? checkedAmount + 1 : checkedAmount - 1;
+    completePercentage = checkedAmount / testSuit.length;
   }
 </script>
 
@@ -26,10 +37,11 @@
       <img class="header__close-icon" on:click={closeDrawer} src="assets/icons/times-solid.svg" alt="close icon">
     </header>
     <h2 class="drawer__title">Checklist</h2>
+    <LinearProgress progress={completePercentage}/>
     <ul class="drawer__checklist">
         {#each testSuit as testCase}
         <FormField>
-          <Checkbox bind:checked={checkListObj[testCase]} />
+          <Checkbox on:change={updateProgress} bind:checked={checkListObj[testCase]} />
           <span class="checklist__label" slot="label">{testCase}</span>
       </FormField>
         {/each}
@@ -112,6 +124,8 @@
   .drawer__checklist {
     display: flex;
     flex-direction: column;
+
+    margin-top: 25px;
   }
 
   .checklist__label {
@@ -119,6 +133,10 @@
 		font-weight: 400;
 		letter-spacing: 0;
 		line-height: 28px;
+  }
+
+  :global(.mdc-linear-progress__bar-inner) {
+    background-color: #964BEB !important;
   }
 
   @media (max-width: 1064px) {
