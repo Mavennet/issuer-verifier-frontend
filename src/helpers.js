@@ -37,30 +37,5 @@ export const getOptions = (issuer, proofPurpose, verificationMethod) => ({
   issuer,
   issuanceDate: new Date().toISOString(),
   proofPurpose,
-  verificationMethod
+  assertionMethod: verificationMethod
 });
-
-export const getVerifierSendObj = (credential, verifier) => {
-  switch (verifier) {
-    case VERIFIERS.MAVENNET:
-      return ({
-        verifiableCredential: credential
-      });
-    case VERIFIERS.TRANSMUTE:
-      return ({
-        credential: credential
-      });
-    case VERIFIERS.DANUBE_TECH:
-      return ({
-        verifiableCredential: credential
-      });
-    case VERIFIERS.FACTOM:
-      return ({
-        verifiableCredential: credential
-      });
-    default:
-      return ({
-        credential: credential
-      });
-  }
-};

@@ -18,7 +18,6 @@
 		getCredentialQuery, 
 		getVerifiablePresentation, 
 		getOptions,
-		getVerifierSendObj
 	} from './helpers';
 
 	import { credentialOptions } from './options/credentialOptions';
@@ -119,15 +118,12 @@
 		}
 
 		const credential = credentialOptions.find(vc => vc.label === vcChoice).value;
-
-		//TODO: check for method in the future;
 		const correctIssuer = issuerOptions[selectedIssuerCompany].issuers.find(item => item.name === selectedIssuerName);
 		const endPoint = correctIssuer.endpoint;
 		const correctOption = correctIssuer.options.find(option => option.issuer === issuer);
 		const assertionMethod = correctOption.assertionMethod;
 
 		const options = getOptions(issuer, 'assertionMethod', assertionMethod);
-		console.log(JSON.stringify({ credential, options }, null, 2));
 		try {
 			isLoading = true;
 			const { data } = await axios.post(endPoint, { credential, options } );
@@ -154,21 +150,37 @@
 		if (!validateVerifyForm()) {
 			return;
 		}
+
+		let 
+			apiUrl,
+			dataToSend;
+
 		const type = credentialOptions.find(vc => vc.label === vcChoice).label;
-		const apiUrl = verifierOptions.find(verifier => verifier.id === selectedVerifier).url;
+		const verifier = verifierOptions.find(verifier => verifier.id === selectedVerifier)
 		const credentialQuery = getCredentialQuery(type);
 
 		try {
 			isLoading = true;
 			const webCredential = await navigator.credentials.get(credentialQuery);
-			console.log(webCredential.data)
 			if(!webCredential) {
       	throw new Error('Get credential operation did not succeed');
 			}
 
-			const sendData = getVerifierSendObj(webCredential.data.verifiableCredential, selectedVerifier);
+			if (credentialPresentation === 0) {
+				apiUrl = verifier.credential_url;
+				dataToSend = { 
+					verifiableCredential: webCredential.data.verifiableCredential[0],
+					options: {
+            checks: ['proof'],
+					}, 
+				};
+			} else {
+				apiUrl = verifier.presentation_url
+				dataToSend = { verifiablePresentation: webCredential.data };
+			}
+
 			
-			const { data } = await axios.post(apiUrl, sendData, {
+			const { data } = await axios.post(apiUrl, dataToSend, {
 				headers: {
             'Content-Type': 'application/json',
         }
