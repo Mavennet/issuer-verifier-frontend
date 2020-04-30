@@ -1,7 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
-
-import { VERIFIERS } from './consts';
-
 export const getCredentialQuery = type => ({
   web: {
     VerifiablePresentation: {
@@ -20,7 +16,8 @@ export const getCredentialQuery = type => ({
           },
         }
       ],
-      challenge: uuidv4()
+      challenge: '99591bde-acad-4b52-84b8-7167246ec0b3',
+      domain: window.location.hostname
     }
   }
 });
