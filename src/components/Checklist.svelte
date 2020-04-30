@@ -8,7 +8,7 @@
     isDrawerOpen = false,
     checkedAmount = 0,
     completePercentage = 0,
-    checkListObj = testSuit.reduce((res, curr) => ({ ...res, curr: false }), {});
+    checkListObj = testSuit.reduce((res, curr, index) => ({ ...res, index: false }), {});
 
   function closeDrawer() {
     isDrawerOpen = false;
@@ -24,6 +24,7 @@
     checkedAmount = checked ? checkedAmount + 1 : checkedAmount - 1;
     completePercentage = checkedAmount / testSuit.length;
   }
+
 </script>
 
 
@@ -36,13 +37,21 @@
     <header class="drawer__header">
       <img class="header__close-icon" on:click={closeDrawer} src="assets/icons/times-solid.svg" alt="close icon">
     </header>
-    <h2 class="drawer__title">Checklist</h2>
-    <LinearProgress progress={completePercentage}/>
+    <h2 class="drawer__title">Test Cases</h2>
+    <LinearProgress style="margin-bottom: 45px" progress={completePercentage}/>
     <ul class="drawer__checklist">
-        {#each testSuit as testCase}
-        <FormField>
-          <Checkbox on:change={updateProgress} bind:checked={checkListObj[testCase]} />
-          <span class="checklist__label" slot="label">{testCase}</span>
+        <div class="checklist__title">
+          <p class="title__item">Issuer</p> 
+          <p class="title__item">Verifier</p>
+        </div>
+        {#each testSuit as testCase, index}
+        <FormField style="margin-bottom: 25px">
+          <Checkbox on:change={updateProgress} bind:checked={checkListObj[index]} />
+          <span class="checklist__label" slot="label">
+            <img class="label__image" src={`./assets/images/${testCase.issuer}_logo.png`} alt={`${testCase.issuer} logo`}>
+            <img class="label__arrow-icon" src="./assets/icons/long-arrow-alt-right-solid.svg" alt="right arrow icon">
+            <img class="label__image" src={`./assets/images/${testCase.verifier}_logo.png`} alt={`${testCase.verifier} logo`}>
+          </span>
       </FormField>
         {/each}
     </ul>
@@ -124,15 +133,48 @@
   .drawer__checklist {
     display: flex;
     flex-direction: column;
-
+    padding-right: 15px;
     margin-top: 25px;
+  }
+
+  .checklist__title {
+    margin-left: 40px;
+    margin-bottom: 25px;
+    padding-left: 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: #9b9b9b;
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: 24px;
+
+    text-align: center;
+  }
+
+  .title__item {
+    width: 35%;
   }
 
   .checklist__label {
 		font-size: 18px;
 		font-weight: 400;
 		letter-spacing: 0;
-		line-height: 28px;
+    line-height: 28px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 5%;
+  }
+
+  .label__image {
+    width: 35%;
+  }
+
+  .label__arrow-icon {
+    width: 10%;
   }
 
   :global(.mdc-linear-progress__bar-inner) {
@@ -150,6 +192,21 @@
     .drawer {
       width: 100vw;
       right: -100vw;
+    }
+  }
+
+  @media (max-width: 385px) {
+    .drawer {
+      padding: 25px 25px 25px 20px;
+    }
+
+    .drawer__checklist {
+      padding-right: 0;
+    }
+
+    .checklist__label,
+    .checklist__title {
+      padding-left: 2%;
     }
   }
 </style>

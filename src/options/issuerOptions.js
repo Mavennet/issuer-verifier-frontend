@@ -3,7 +3,7 @@ export const issuerOptions = {
     verify_credential_endpoint: "https://api.neo-flow.com/verifier/credentials",
     verify_presentation_endpoint:
       "https://api.neo-flow.com/verifier/presentations",
-    src: 'mavennet_verifier.png',
+    src: 'mavennet.png',
     alt: 'Mavennet Logo', 
     issuers: [
       {
@@ -40,7 +40,7 @@ export const issuerOptions = {
       "https://vc.transmute.world/v0.1.0/verify/credentials",
     verify_presentation_endpoint:
       "https://vc.transmute.world/v0.1.0/verify/presentations",
-    src: 'transmute_verifier.png',
+    src: 'transmute.png',
     alt: 'Transmute Logo', 
     issuers: [
       {
@@ -174,7 +174,7 @@ export const issuerOptions = {
       "https://vc.api.factom.sphereon.com/services/verify/credentials",
     verify_presentation_endpoint:
       "https://vc.api.factom.sphereon.com/services/verify/presentations",
-    src: 'factom_logo.png',
+    src: 'factom.png',
     alt: 'Factom Logo', 
     issuers: [
       {

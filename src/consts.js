@@ -22,7 +22,7 @@ export const SNACKBAR_TYPE = {
   ERROR: 'error'
 };
 
-export const VERIFIERS = {
+export const COMPANIES = {
   MAVENNET: 'mavennet',
   TRANSMUTE: 'transmute',
   DANUBE_TECH: 'danube_tech',

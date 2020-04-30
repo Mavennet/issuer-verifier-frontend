@@ -28,13 +28,13 @@
 		VERIFIER_MESSAGE, 
 		FORM_MESSAGE,
 		SNACKBAR_TYPE,
-		VERIFIERS,
+		COMPANIES,
 		CREDENTIAL_PRESENTATION
 	} from './consts';
 
 
 	const 
-		logoSrc = './assets/images/mavennet_logo.png',
+		logoSrc = './assets/images/mavennet_logo_white.png',
 		apiUrl = process.env.API_URL;
 
 	/**
