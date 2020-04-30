@@ -16,8 +16,7 @@ export const getCredentialQuery = type => ({
           },
         }
       ],
-      challenge: '99591bde-acad-4b52-84b8-7167246ec0b3',
-      domain: window.location.hostname
+      challenge: '99591bde-acad-4b52-84b8-7167246ec0b3'
     }
   }
 });

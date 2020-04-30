@@ -184,7 +184,7 @@
 				verifiablePresentation: webCredential.data,
 				options: {
 					challenge: webCredential.data.proof.challenge,
-					domain,
+					domain: window.location.hostname,
 					checks: [
 						'proof'
 					]
