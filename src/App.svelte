@@ -10,7 +10,6 @@
 	import '@smui/textfield.css';
 
 	import Snackbar from './components/Snackbar.svelte';
-	import Switch from './components/Switch.svelte';
 	import LoadingSpinner from './components/LoadingSpinner.svelte';
 	import Checklist from './components/Checklist.svelte';
 
@@ -29,7 +28,8 @@
 		VERIFIER_MESSAGE, 
 		FORM_MESSAGE,
 		SNACKBAR_TYPE,
-		VERIFIERS
+		VERIFIERS,
+		CREDENTIAL_PRESENTATION
 	} from './consts';
 
 
@@ -64,8 +64,7 @@
 	 */
 	let
 		selectedVerifier,
-		isCredential = true,
-		credentialPresentation = 0;
+		credentialPresentation = CREDENTIAL_PRESENTATION.CREDENTIAL;
 
 	/**
 	 * Dynamically loads the issuer (did) options when a Issuer name is selected
@@ -104,10 +103,6 @@
 
 	function setDisplaySnackBar(value) {
 		isSnackbarShowing = value;
-	}
-
-	function handleSwitchChange(event) {
-		credentialPresentation = event.detail.id;
 	}
 
 	function validateIssueForm() {
@@ -184,28 +179,33 @@
       	throw new Error('Get credential operation did not succeed');
 			}
 
-			if (credentialPresentation === 0) {
-				apiUrl = verifier.credential_url;
-				dataToSend = { 
-					verifiableCredential: webCredential.data.verifiableCredential[0],
-					options: {
-            checks: ['proof'],
-					}, 
-				};
-			} else {
-				apiUrl = verifier.presentation_url
-				dataToSend = { 
-					verifiablePresentation: webCredential.data,
-					options: {
-						challenge: webCredential.data.proof.challenge,
-						checks: [
-							'proof'
-						]
-					}
-				};
+			switch(credentialPresentation) {
+				case CREDENTIAL_PRESENTATION.CREDENTIAL:
+					apiUrl = verifier.credential_url;
+					dataToSend = { 
+						verifiableCredential: webCredential.data.verifiableCredential[0],
+						options: {
+							checks: ['proof'],
+						}, 
+					};
+					break;
+				case CREDENTIAL_PRESENTATION.PRESENTATION:
+					apiUrl = verifier.presentation_url
+					dataToSend = { 
+						verifiablePresentation: webCredential.data,
+						options: {
+							challenge: webCredential.data.proof.challenge,
+							checks: [
+								'proof'
+							]
+						}
+					};
+					break;
+				default:
+					throw new Error('Credential/Presentation invalid value');
+					break;
 			}
 
-			
 			const { data } = await axios.post(apiUrl, dataToSend, {
 				headers: {
             'Content-Type': 'application/json',
@@ -334,7 +334,18 @@
 								{/each}
 							</ul>
 						</div>
-						<Switch on:selectedVerification={handleSwitchChange}></Switch>
+						<Select enhanced variant="outlined" bind:value={credentialPresentation} label="Credential/Presentation" class="content__input">
+								<Option 
+									value={CREDENTIAL_PRESENTATION.CREDENTIAL} 
+									selected={credentialPresentation === CREDENTIAL_PRESENTATION.CREDENTIAL}>
+									Credential
+								</Option>
+								<Option 
+									value={CREDENTIAL_PRESENTATION.PRESENTATION} 
+									selected={credentialPresentation === CREDENTIAL_PRESENTATION.PRESENTATION}>
+									Presentation
+								</Option>
+						</Select>
 						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input content__input--last">
 							{#each credentialOptions as credential}
 								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>

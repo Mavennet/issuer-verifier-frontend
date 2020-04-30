@@ -30,3 +30,8 @@ export const VERIFIERS = {
   SECURE_KEY: 'secure_key',
   FACTOM: 'factom'
 };
+
+export const CREDENTIAL_PRESENTATION = {
+  CREDENTIAL: 0,
+  PRESENTATION: 1
+};
