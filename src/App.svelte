@@ -37,25 +37,39 @@
 		logoSrc = './assets/images/mavennet_logo.png',
 		apiUrl = process.env.API_URL;
 
+	/**
+	 * General variables
+	 */
 	let	
-		selectedTab = 0,
-		vcChoice,
-		isCredential = true,
-		issuer = '',
 		polyfillInstance = null,
+		selectedTab = 0,
 		isLoading = false,
-		selectedVerifier,
-		selectedIssuerCompany,
-		selectedIssuerName,
 		isSnackbarShowing = false,
 		snackbarMessage,
 		snackbarType,
-		credentialPresentation = 0;
+		vcChoice;
 
+	/**
+	 * Issuer variable
+	 */
 	let
+		issuer = '',
+		selectedIssuerCompany,
+		selectedIssuerName,
 		issuerNameOpt = [],
 		issuerDidOpt = [];
 
+	/**
+	 * Verifier variable
+	 */
+	let
+		selectedVerifier,
+		isCredential = true,
+		credentialPresentation = 0;
+
+	/**
+	 * Dynamically loads the issuer (did) options when a Issuer name is selected
+	 */
 	$: if (selectedIssuerCompany && selectedIssuerName) {
 		const options = issuerOptions[selectedIssuerCompany].issuers.find(item => item.name === selectedIssuerName).options 
 		issuerDidOpt = options.map(options => options.issuer);
