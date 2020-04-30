@@ -64,7 +64,7 @@
 	 */
 	let
 		selectedVerifier,
-		credentialPresentation = CREDENTIAL_PRESENTATION.CREDENTIAL;
+		credentialPresentation = "credential";
 
 	/**
 	 * Dynamically loads the issuer (did) options when a Issuer name is selected
@@ -128,7 +128,7 @@
 			return;
 		}
 
-		const credential = credentialOptions.find(vc => vc.label === vcChoice).value;
+		let credential = credentialOptions.find(vc => vc.label === vcChoice).value;
 		const correctIssuer = issuerOptions[selectedIssuerCompany].issuers.find(item => item.name === selectedIssuerName);
 		const endPoint = correctIssuer.endpoint;
 		const correctOption = correctIssuer.options.find(option => option.issuer === issuer);
@@ -171,6 +171,7 @@
 		const type = credentialOptions.find(vc => vc.label === vcChoice).label;
 		const verifier = verifierOptions.find(verifier => verifier.id === selectedVerifier)
 		const credentialQuery = getCredentialQuery(type);
+		const { domain } = credentialQuery;
 
 		try {
 			isLoading = true;
@@ -179,31 +180,30 @@
       	throw new Error('Get credential operation did not succeed');
 			}
 
-			switch(credentialPresentation) {
-				case CREDENTIAL_PRESENTATION.CREDENTIAL:
-					apiUrl = verifier.credential_url;
+			if (credentialPresentation === "credential") {
+				apiUrl = verifier.credential_url;
 					dataToSend = { 
 						verifiableCredential: webCredential.data.verifiableCredential[0],
 						options: {
-							checks: ['proof'],
+							challenge: webCredential.data.proof.challenge,
+							domain,
+							checks: [
+								'proof'
+							]
 						}, 
 					};
-					break;
-				case CREDENTIAL_PRESENTATION.PRESENTATION:
+			} else {
 					apiUrl = verifier.presentation_url
 					dataToSend = { 
 						verifiablePresentation: webCredential.data,
 						options: {
 							challenge: webCredential.data.proof.challenge,
+							domain,
 							checks: [
 								'proof'
 							]
 						}
 					};
-					break;
-				default:
-					throw new Error('Credential/Presentation invalid value');
-					break;
 			}
 
 			const { data } = await axios.post(apiUrl, dataToSend, {
@@ -336,13 +336,13 @@
 						</div>
 						<Select enhanced variant="outlined" bind:value={credentialPresentation} label="Credential/Presentation" class="content__input">
 								<Option 
-									value={CREDENTIAL_PRESENTATION.CREDENTIAL} 
-									selected={credentialPresentation === CREDENTIAL_PRESENTATION.CREDENTIAL}>
+									value="credential"
+									selected={credentialPresentation === "credential"}>
 									Credential
 								</Option>
 								<Option 
-									value={CREDENTIAL_PRESENTATION.PRESENTATION} 
-									selected={credentialPresentation === CREDENTIAL_PRESENTATION.PRESENTATION}>
+									value="presentation"
+									selected={credentialPresentation === "presentation"}>
 									Presentation
 								</Option>
 						</Select>
