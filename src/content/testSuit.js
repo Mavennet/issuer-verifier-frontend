@@ -1,6 +1,24 @@
+import { COMPANIES } from '../consts';
+
 export const testSuit = [
-  "Mavennet issuer/Transmute Verifier",
-  "Transmute issuer/Mavennet Verifier",
-  "Mavennet issuer/Factom Verifier",
-  "Factom issuer/Mavennet Verifier"
+  {
+    issuer: COMPANIES.MAVENNET,
+    verifier: COMPANIES.MAVENNET
+  },
+  {
+    issuer: COMPANIES.MAVENNET,
+    verifier: COMPANIES.TRANSMUTE
+  },
+  {
+    issuer: COMPANIES.MAVENNET,
+    verifier: COMPANIES.FACTOM
+  },
+  {
+    issuer: COMPANIES.TRANSMUTE,
+    verifier: COMPANIES.MAVENNET
+  },
+  {
+    issuer: COMPANIES.FACTOM,
+    verifier: COMPANIES.MAVENNET
+  },
 ];
