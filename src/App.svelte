@@ -63,8 +63,7 @@
 	 * Verifier variable
 	 */
 	let
-		selectedVerifier,
-		credentialPresentation = "credential";
+		selectedVerifier;
 
 	/**
 	 * Dynamically loads the issuer (did) options when a Issuer name is selected
@@ -180,31 +179,17 @@
       	throw new Error('Get credential operation did not succeed');
 			}
 
-			if (credentialPresentation === "credential") {
-				apiUrl = verifier.credential_url;
-					dataToSend = { 
-						verifiableCredential: webCredential.data.verifiableCredential[0],
-						options: {
-							challenge: webCredential.data.proof.challenge,
-							domain,
-							checks: [
-								'proof'
-							]
-						}, 
-					};
-			} else {
-					apiUrl = verifier.presentation_url
-					dataToSend = { 
-						verifiablePresentation: webCredential.data,
-						options: {
-							challenge: webCredential.data.proof.challenge,
-							domain,
-							checks: [
-								'proof'
-							]
-						}
-					};
-			}
+			apiUrl = verifier.presentation_url
+			dataToSend = { 
+				verifiablePresentation: webCredential.data,
+				options: {
+					challenge: webCredential.data.proof.challenge,
+					domain,
+					checks: [
+						'proof'
+					]
+				}
+			};
 
 			const { data } = await axios.post(apiUrl, dataToSend, {
 				headers: {
@@ -334,18 +319,6 @@
 								{/each}
 							</ul>
 						</div>
-						<Select enhanced variant="outlined" bind:value={credentialPresentation} label="Credential/Presentation" class="content__input">
-								<Option 
-									value="credential"
-									selected={credentialPresentation === "credential"}>
-									Credential
-								</Option>
-								<Option 
-									value="presentation"
-									selected={credentialPresentation === "presentation"}>
-									Presentation
-								</Option>
-						</Select>
 						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input content__input--last">
 							{#each credentialOptions as credential}
 								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
