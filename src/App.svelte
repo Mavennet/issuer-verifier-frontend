@@ -124,6 +124,8 @@
 		const assertionMethod = correctOption.assertionMethod;
 
 		const options = getOptions(issuer, 'assertionMethod', assertionMethod);
+
+		credential = { ...credential, issuer, issuanceDate: options.issuanceDate};
 		try {
 			isLoading = true;
 			const { data } = await axios.post(endPoint, { credential, options } );
@@ -176,7 +178,15 @@
 				};
 			} else {
 				apiUrl = verifier.presentation_url
-				dataToSend = { verifiablePresentation: webCredential.data };
+				dataToSend = { 
+					verifiablePresentation: webCredential.data,
+					options: {
+						challenge: webCredential.data.proof.challenge,
+						checks: [
+							'proof'
+						]
+					}
+				};
 			}
 
 			
