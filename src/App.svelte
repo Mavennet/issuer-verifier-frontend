@@ -89,10 +89,25 @@
 		}
 	});
 
+	function selectTab(value) {
+		selectedVerifier = null;
+		issuer = null;
+		vcChoice = null;
+		selectedTab = value;
+	}
+
 	function showSnackbar(type, message) {
 		isSnackbarShowing = true;
 		snackbarType = type;
 		snackbarMessage = message;
+	}
+
+	function setDisplaySnackBar(value) {
+		isSnackbarShowing = value;
+	}
+
+	function handleSwitchChange(event) {
+		credentialPresentation = event.detail.id;
 	}
 
 	function validateIssueForm() {
@@ -109,19 +124,6 @@
 			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.ISSUER);
 			return false;
 		}
-
-		return true;
-	}
-
-	function validateVerifyForm() {
-		if (!vcChoice) {
-			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.TYPE);
-			return false;
-		}
-		//  else if (selectedVerifier !== null) {
-		// 	showSnackbar(true, FORM_MESSAGE.VERIFIER);
-		// 	return false;
-		// }
 
 		return true;
 	}
@@ -219,11 +221,17 @@
 		}
 	}
 
-	function selectTab(value) {
-		selectedVerifier = null;
-		issuer = null;
-		vcChoice = null;
-		selectedTab = value;
+	function validateVerifyForm() {
+		if (!vcChoice) {
+			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.TYPE);
+			return false;
+		}
+		//  else if (selectedVerifier !== null) {
+		// 	showSnackbar(true, FORM_MESSAGE.VERIFIER);
+		// 	return false;
+		// }
+
+		return true;
 	}
 
 	function selectVerifier(id) {
@@ -235,14 +243,6 @@
 		selectedIssuerName = '';
 		issuerNameOpt = issuerOptions[selectedIssuerCompany].issuers.map(issuer => issuer.name);
 		issuer = '';
-	}
-
-	function setDisplaySnackBar(value) {
-		isSnackbarShowing = value;
-	}
-
-	function handleSwitchChange(event) {
-		credentialPresentation = event.detail.id;
 	}
 </script>
 
