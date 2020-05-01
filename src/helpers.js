@@ -32,6 +32,6 @@ export const getVerifiablePresentation = verifiableCredential => ({
 export const getOptions = (issuer, proofPurpose, verificationMethod) => ({
   issuer,
   issuanceDate: new Date().toISOString(),
-  proofPurpose,
+  // proofPurpose,
   assertionMethod: verificationMethod
 });
