@@ -170,7 +170,7 @@
 		const type = credentialOptions.find(vc => vc.label === vcChoice).label;
 		const verifier = verifierOptions.find(verifier => verifier.id === selectedVerifier)
 		const credentialQuery = getCredentialQuery(type);
-		const { domain } = credentialQuery;
+		credentialQuery.web.VerifiablePresentation['domain'] = window.location.hostname;
 
 		try {
 			isLoading = true;
