@@ -104,6 +104,8 @@
     -webkit-box-shadow: -6px 0px 36px -6px rgba(0,0,0,0.75);
     -moz-box-shadow: -6px 0px 36px -6px rgba(0,0,0,0.75);
     box-shadow: -6px 0px 36px -6px rgba(0,0,0,0.75);
+
+    overflow-y: scroll;
   }
 
   .drawer--open {

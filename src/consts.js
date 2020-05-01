@@ -26,7 +26,7 @@ export const COMPANIES = {
   MAVENNET: 'mavennet',
   TRANSMUTE: 'transmute',
   DANUBE_TECH: 'danube_tech',
-  DIGITAL_BAZAAR: 'digital_bazar',
+  DIGITAL_BAZAAR: 'digital_bazaar',
   SECURE_KEY: 'secure_key',
   FACTOM: 'factom'
 };
