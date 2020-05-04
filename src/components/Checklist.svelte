@@ -42,17 +42,30 @@
     <ul class="drawer__checklist">
         <div class="checklist__title">
           <p class="title__item">Issuer</p> 
+          <p class="title__item title__item--table"></p> 
           <p class="title__item">Verifier</p>
+          <p class="title__item">Wallet</p>
+          <p class="title__item">Credential Type</p>
         </div>
         {#each testSuit as testCase, index}
-        <FormField style="margin-bottom: 25px">
-          <Checkbox on:change={updateProgress} bind:checked={checkListObj[index]} />
-          <span class="checklist__label" slot="label">
-            <img class="label__image" src={`./assets/images/${testCase.issuer}_logo.png`} alt={`${testCase.issuer} logo`}>
-            <img class="label__arrow-icon" src="./assets/icons/long-arrow-alt-right-solid.svg" alt="right arrow icon">
-            <img class="label__image" src={`./assets/images/${testCase.verifier}_logo.png`} alt={`${testCase.verifier} logo`}>
-          </span>
-      </FormField>
+          <FormField style="margin-bottom: 25px">
+              <Checkbox on:change={updateProgress} bind:checked={checkListObj[index]} />
+              <span class="checklist__label" slot="label">
+                <div class="label__image">
+                  <img class:image--square="{testCase.issuer === 'sicpa'}" src={`./assets/images/${testCase.issuer}_logo.png`} alt={`${testCase.issuer} logo`}>
+                </div>
+                <div class="label__arrow-icon">
+                  <img src="./assets/icons/long-arrow-alt-right-solid.svg" alt="right arrow icon">
+                </div>
+                <div class="label__image">
+                  <img class:image--square="{testCase.verifier === 'sicpa'}" src={`./assets/images/${testCase.verifier}_logo.png`} alt={`${testCase.verifier} logo`}>
+                </div>
+                <div class="label__image">
+                  <img src={`./assets/images/${testCase.wallet}_logo.png`} alt={`${testCase.wallet} logo`}>
+                </div>
+                <p class="label__text">{testCase.credential}</p>
+              </span>
+          </FormField>
         {/each}
     </ul>
   </div>
@@ -88,10 +101,10 @@
 
   .drawer {
     position: fixed;
-    right: -33vw;
-    bottom: 30px;
-    width: 33vw;
-    height: 85vh;
+    right: -80vw;
+    bottom: 0px;
+    width: 80vw;
+    height: 100vh;
     z-index: 999999;
     background-color: white;
     border-radius: 4px 0 0 4px;
@@ -125,7 +138,7 @@
   }
 
   .drawer__title {
-    font-size: 24px;
+    font-size: 37px;
 		font-weight: 500;
 		letter-spacing: 0;
     line-height: 28px;
@@ -156,7 +169,13 @@
   }
 
   .title__item {
-    width: 35%;
+    width: 14.5%;
+    margin: 0 1%;
+  }
+
+  .title__item--table {
+    width: 4%;
+    margin: 0 1%;
   }
 
   .checklist__label {
@@ -171,12 +190,29 @@
     padding-left: 5%;
   }
 
-  .label__image {
-    width: 35%;
+  .label__image,
+  .label__text {
+    width: 14.5%;
+    margin: 0 1%;
+  }
+
+  .label__image img {
+    width: 100%;
+  }
+
+  .label__image .image--square {
+    width: 80px;
+    height: 80px;
+    margin-left: calc(50% - 40px);
+  }
+
+  .label__text {
+    text-align: center;
   }
 
   .label__arrow-icon {
-    width: 10%;
+    width: 4%;
+    margin: 0 1%;
   }
 
   :global(.mdc-linear-progress__bar-inner) {
@@ -184,13 +220,6 @@
   }
 
   @media (max-width: 1064px) {
-    .drawer {
-      width: 50vw;
-      right: -50vw;
-    }
-  }
-
-  @media (max-width: 715px) {
     .drawer {
       width: 100vw;
       right: -100vw;

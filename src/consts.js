@@ -28,7 +28,9 @@ export const COMPANIES = {
   DANUBE_TECH: 'danube_tech',
   DIGITAL_BAZAAR: 'digital_bazaar',
   SECURE_KEY: 'secure_key',
-  FACTOM: 'factom'
+  FACTOM: 'factom',
+  VERES_ONE: 'veres_one',
+  SICPA: 'sicpa'
 };
 
 export const CREDENTIAL_PRESENTATION = {
