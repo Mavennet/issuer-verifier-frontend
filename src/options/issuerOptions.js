@@ -1,10 +1,10 @@
 export const issuerOptions = {
-  "Mavennet": {
+  Mavennet: {
     verify_credential_endpoint: "https://api.neo-flow.com/verifier/credentials",
     verify_presentation_endpoint:
       "https://api.neo-flow.com/verifier/presentations",
-    src: 'mavennet.png',
-    alt: 'Mavennet Logo', 
+    src: "mavennet.png",
+    alt: "Mavennet Logo",
     issuers: [
       {
         name: "DID Key Issuer",
@@ -35,13 +35,13 @@ export const issuerOptions = {
       },
     ],
   },
-  "Transmute": {
+  Transmute: {
     verify_credential_endpoint:
       "https://vc.transmute.world/v0.1.0/verify/credentials",
     verify_presentation_endpoint:
       "https://vc.transmute.world/v0.1.0/verify/presentations",
-    src: 'transmute.png',
-    alt: 'Transmute Logo', 
+    src: "transmute.png",
+    alt: "Transmute Logo",
     issuers: [
       {
         name: "DID Web Issuer",
@@ -85,8 +85,8 @@ export const issuerOptions = {
       "https://verifier.sandbox.trustbloc.dev/verifier/credentials",
     verify_presentation_endpoint:
       "https://verifier.sandbox.trustbloc.dev/verifier/presentations",
-    src: 'secure_key.png',
-    alt: 'Secure Key Logo', 
+    src: "secure_key.png",
+    alt: "Secure Key Logo",
     issuers: [
       {
         name: "TrustBloc Issuer - TrustBloc DID",
@@ -120,8 +120,8 @@ export const issuerOptions = {
       "https://univerifier.io/api/verifier/credentials",
     verify_presentation_endpoint:
       "https://univerifier.io/api/verifier/presentations",
-    src: 'danube_tech.png',
-    alt: 'Danube Tech Logo',
+    src: "danube_tech.png",
+    alt: "Danube Tech Logo",
     issuers: [
       {
         name: "Universal Issuer (did:sov)",
@@ -152,8 +152,8 @@ export const issuerOptions = {
       "https://verifier.interop.digitalbazaar.com/verifier/credentials",
     verify_presentation_endpoint:
       "https://verifier.interop.digitalbazaar.com/verifier/presentations",
-    src: 'digital_bazaar.png',
-    alt: 'Digital Bazaar Logo', 
+    src: "digital_bazaar.png",
+    alt: "Digital Bazaar Logo",
     issuers: [
       {
         name: "DID Key Issuer",
@@ -169,25 +169,63 @@ export const issuerOptions = {
       },
     ],
   },
-  "Factom": {
+  Factom: {
     verify_credential_endpoint:
       "https://vc.api.factom.sphereon.com/services/verify/credentials",
     verify_presentation_endpoint:
       "https://vc.api.factom.sphereon.com/services/verify/presentations",
-    src: 'factom.png',
-    alt: 'Factom Logo', 
+    src: "factom.png",
+    alt: "Factom Logo",
     issuers: [
       {
-        name: 'DID Issuers',
-        endpoint: 'https://vc.api.factom.sphereon.com/services/issue/credentials',
+        name: "DID Issuers",
+        endpoint:
+          "https://vc.api.factom.sphereon.com/services/issue/credentials",
         options: [
           {
-            issuer: 'did:factom:5d0dd58757119dd437c70d92b44fbf86627ee275f0f2146c3d99e441da342d9f',
-            assertionMethod: 'did:factom:5d0dd58757119dd437c70d92b44fbf86627ee275f0f2146c3d99e441da342d9f#key-0',
+            issuer:
+              "did:factom:5d0dd58757119dd437c70d92b44fbf86627ee275f0f2146c3d99e441da342d9f",
+            assertionMethod:
+              "did:factom:5d0dd58757119dd437c70d92b44fbf86627ee275f0f2146c3d99e441da342d9f#key-0",
           },
           {
-            issuer: 'did:v1:test:nym:z6MkvSbsrm44VnhngbyW2rZk2u9bvSPUSmJwqYjMd4RSJT7A',
-            assertionMethod: 'did:v1:test:nym:z6MkvSbsrm44VnhngbyW2rZk2u9bvSPUSmJwqYjMd4RSJT7A#z6MkjFhRvbXfjmQ8iFHeYh42cNS7v4CtguLzvwZSXcHe8zqy',
+            issuer:
+              "did:v1:test:nym:z6MkvSbsrm44VnhngbyW2rZk2u9bvSPUSmJwqYjMd4RSJT7A",
+            assertionMethod:
+              "did:v1:test:nym:z6MkvSbsrm44VnhngbyW2rZk2u9bvSPUSmJwqYjMd4RSJT7A#z6MkjFhRvbXfjmQ8iFHeYh42cNS7v4CtguLzvwZSXcHe8zqy",
+          },
+        ],
+      },
+    ],
+  },
+  Sicpa: {
+    verify_credential_endpoint:
+      "https://svip-interop.ocs-support.com/api/verifier/credentials",
+    verify_presentation_endpoint:
+      "https://svip-interop.ocs-support.com/api/verifier/presentations",
+    src: "sicpa.png",
+    alt: "Sicpa Logo",
+    issuers: [
+      {
+        name: "DID sov issuer",
+        endpoint:
+          "https://svip-interop.ocs-support.com/api/credentials/issueCredential",
+        options: [
+          {
+            issuer: "did:sov:staging:PiEVD2uU2qKEQ5oxx1BJ6A",
+            assertionMethod: "did:sov:staging:PiEVD2uU2qKEQ5oxx1BJ6A#key-1",
+          },
+        ],
+      },
+      {
+        name: "DID Key Issuer",
+        endpoint:
+          "https://svip-interop.ocs-support.com/api/credentials/issueCredential",
+        options: [
+          {
+            issuer: "did:key:z6MkrqCMy45WhL3UEa1gGTHUtr17AvU4czfP5fH9KNDoYaYN",
+            assertionMethod:
+              "did:key:z6MkrqCMy45WhL3UEa1gGTHUtr17AvU4czfP5fH9KNDoYaYN#z6MkrqCMy45WhL3UEa1gGTHUtr17AvU4czfP5fH9KNDoYaYN",
           },
         ],
       },
