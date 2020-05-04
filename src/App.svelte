@@ -24,6 +24,9 @@
 	import { issuerOptions } from './options/issuerOptions';
 	import { verifierOptions } from './options/verifierOptions';
 
+
+  import { rawMaterialTestSuit, prcTestSuit } from './content';
+
 	import { 
 		ISSUER_MESSAGE, 
 		VERIFIER_MESSAGE, 
@@ -248,7 +251,8 @@
 
 
 <div class="wrapper">
-	<Checklist></Checklist>
+	<Checklist content={rawMaterialTestSuit} isRawMaterial={true}></Checklist>
+	<Checklist content={prcTestSuit}></Checklist>
 	<Snackbar 
 		text={snackbarMessage} 
 		display={isSnackbarShowing} 

@@ -2,13 +2,15 @@
   import Checkbox from '@smui/checkbox';
   import FormField from '@smui/form-field';
   import LinearProgress from '@smui/linear-progress';
-  import {testSuit} from '../content/testSuit.js';
+
+  export let isRawMaterial;
+  export let content;
 
   let 
     isDrawerOpen = false,
     checkedAmount = 0,
     completePercentage = 0,
-    checkListObj = testSuit.reduce((res, curr, index) => ({ ...res, index: false }), {});
+    checkListObj = content.reduce((res, curr, index) => ({ ...res, index: false }), {});
 
   function closeDrawer() {
     isDrawerOpen = false;
@@ -22,32 +24,29 @@
     const { checked } = event.target;
 
     checkedAmount = checked ? checkedAmount + 1 : checkedAmount - 1;
-    completePercentage = checkedAmount / testSuit.length;
+    completePercentage = checkedAmount / content.length;
   }
 
 </script>
 
 
 <div class="container">
-  <button class="checklist__button" on:click={openDrawer} >
-    <img class="button__icon" src="assets/icons/check-square-regular.svg" alt="checkbox icon">
+  <button class="checklist__button" class:button--isRawMaterial="{isRawMaterial}" on:click={openDrawer} >
+    <img class="button__icon" src={`assets/icons/${isRawMaterial ? 'tint-solid' : 'id-card-regular'}.svg`} alt="checkbox icon">
   </button>
 
-  <div class="drawer" class:drawer--open="{isDrawerOpen}">
+  <div class="drawer" class:drawer--open="{isDrawerOpen}" class:drawer--isRawMaterial="{isRawMaterial}">
     <header class="drawer__header">
       <img class="header__close-icon" on:click={closeDrawer} src="assets/icons/times-solid.svg" alt="close icon">
     </header>
-    <h2 class="drawer__title">Test Cases</h2>
+    <h2 class="drawer__title">{isRawMaterial ? 'Raw Material Cohort Tests' : 'PRC Tests'}</h2>
     <LinearProgress style="margin-bottom: 45px" progress={completePercentage}/>
     <ul class="drawer__checklist">
         <div class="checklist__title">
           <p class="title__item">Issuer</p> 
-          <p class="title__item title__item--table"></p> 
           <p class="title__item">Verifier</p>
-          <p class="title__item">Wallet</p>
-          <p class="title__item">Credential Type</p>
         </div>
-        {#each testSuit as testCase, index}
+        {#each content as testCase, index}
           <FormField style="margin-bottom: 25px">
               <Checkbox on:change={updateProgress} bind:checked={checkListObj[index]} />
               <span class="checklist__label" slot="label">
@@ -60,10 +59,6 @@
                 <div class="label__image">
                   <img class:image--square="{testCase.verifier === 'sicpa'}" src={`./assets/images/${testCase.verifier}_logo.png`} alt={`${testCase.verifier} logo`}>
                 </div>
-                <div class="label__image">
-                  <img src={`./assets/images/${testCase.wallet}_logo.png`} alt={`${testCase.wallet} logo`}>
-                </div>
-                <p class="label__text">{testCase.credential}</p>
               </span>
           </FormField>
         {/each}
@@ -94,6 +89,11 @@
     align-items: center;
   }
 
+  .button--isRawMaterial {
+    bottom: 30px;
+    left: 30px;
+  }
+
   .button__icon {
     width: 35px;
     color: var(--pallete-medium-purple);
@@ -101,10 +101,10 @@
 
   .drawer {
     position: fixed;
-    right: -80vw;
-    bottom: 0px;
-    width: 80vw;
-    height: 100vh;
+    right: -33vw;
+    bottom: 30px;
+    width: 33vw;
+    height: 85vh;
     z-index: 999999;
     background-color: white;
     border-radius: 4px 0 0 4px;
@@ -113,7 +113,7 @@
 
     font-family: 'Roboto', sans-serif;
 
-    transition: right .5s cubic-bezier(0.820, 0.085, 0.395, 0.895);
+    transition: all .5s cubic-bezier(0.820, 0.085, 0.395, 0.895);
     -webkit-box-shadow: -6px 0px 36px -6px rgba(0,0,0,0.75);
     -moz-box-shadow: -6px 0px 36px -6px rgba(0,0,0,0.75);
     box-shadow: -6px 0px 36px -6px rgba(0,0,0,0.75);
@@ -121,8 +121,18 @@
     overflow-y: scroll;
   }
 
+  .drawer--isRawMaterial {
+    left: -34vw;
+    right: auto;
+  }
+
   .drawer--open {
     right: 0 !important;
+  }
+
+  .drawer--isRawMaterial.drawer--open {
+    left: 0 !important;
+    right: auto !important;
   }
 
   .drawer__header {
@@ -169,13 +179,7 @@
   }
 
   .title__item {
-    width: 14.5%;
-    margin: 0 1%;
-  }
-
-  .title__item--table {
-    width: 4%;
-    margin: 0 1%;
+    width: 35%;
   }
 
   .checklist__label {
@@ -190,10 +194,8 @@
     padding-left: 5%;
   }
 
-  .label__image,
-  .label__text {
-    width: 14.5%;
-    margin: 0 1%;
+  .label__image{
+    width: 35%;
   }
 
   .label__image img {
@@ -206,13 +208,8 @@
     margin-left: calc(50% - 40px);
   }
 
-  .label__text {
-    text-align: center;
-  }
-
   .label__arrow-icon {
-    width: 4%;
-    margin: 0 1%;
+    width: 10%;
   }
 
   :global(.mdc-linear-progress__bar-inner) {
@@ -221,8 +218,15 @@
 
   @media (max-width: 1064px) {
     .drawer {
-      width: 100vw;
-      right: -100vw;
+      width: 50vw;	
+      right: -50vw;
+    }
+  }
+
+  @media (max-width: 715px) {
+    .drawer {
+      width: 100vw;	
+      right: 100vw;
     }
   }
 
