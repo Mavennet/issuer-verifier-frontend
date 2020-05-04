@@ -17,6 +17,7 @@
 		getCredentialQuery, 
 		getVerifiablePresentation, 
 		getOptions,
+		replaceUuidUrlId
 	} from './helpers';
 
 	import { credentialOptions } from './options/credentialOptions';
@@ -135,6 +136,7 @@
 
 		const options = getOptions(issuer, 'assertionMethod', assertionMethod);
 
+		credential.id = replaceUuidUrlId(credential.id);
 		credential = { ...credential, issuer, issuanceDate: options.issuanceDate};
 		try {
 			isLoading = true;

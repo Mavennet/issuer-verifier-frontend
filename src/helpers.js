@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export const getCredentialQuery = type => ({
   web: {
     VerifiablePresentation: {
@@ -35,3 +37,17 @@ export const getOptions = (issuer, proofPurpose, verificationMethod) => ({
   // proofPurpose,
   assertionMethod: verificationMethod
 });
+
+export const replaceUuidUrlId = (urlId) => {
+  const newUuid = uuidv4();
+
+  if (!urlId) {
+    return `https://sampleurl.com/${newUuid}`;
+  }
+
+  const splitUrl = urlId.split('/');
+  splitUrl[splitUrl.length - 1] = newUuid;
+  const newUrl = splitUrl.join('/');
+
+  return newUrl;
+}
