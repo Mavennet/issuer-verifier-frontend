@@ -43,4 +43,11 @@ export const verifierOptions = [
     credential_url: 'https://vc.api.factom.sphereon.com/services/verify/credentials',
     presentation_url: 'https://vc.api.factom.sphereon.com/services/verify/presentations'
   },
+  {
+    id: COMPANIES.SICPA,
+    alt: 'Sicpa Verifier Logo',
+    src: 'sicpa.png',
+    credential_url: 'https://svip-interop.ocs-support.com/api/verifier/credentials',
+    presentation_url: 'https://svip-interop.ocs-support.com/api/verifier/presentations '
+  }
 ];
