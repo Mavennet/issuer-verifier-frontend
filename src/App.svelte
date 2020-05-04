@@ -55,6 +55,8 @@
 	 */
 	let
 		issuer = '',
+		name = '',
+		description = '',
 		selectedIssuerCompany,
 		selectedIssuerName,
 		issuerNameOpt = [],
@@ -76,6 +78,15 @@
 	} else {
 		issuerDidOpt = [];
 		issuer = '';
+	}
+
+	$: if (vcChoice) {
+		const currentVcObj = credentialOptions.find(vc => vc.label === vcChoice).value;
+		name = currentVcObj.name;
+		description = currentVcObj.description;
+	} else {
+		name = '';
+		description = '';
 	}
 
 
@@ -137,6 +148,8 @@
 		const options = getOptions(issuer, 'assertionMethod', assertionMethod);
 
 		credential.id = replaceUuidUrlId(credential.id);
+		credential.name = name;
+		credential.description = description;
 		credential = { ...credential, issuer, issuanceDate: options.issuanceDate};
 		try {
 			isLoading = true;
@@ -290,11 +303,13 @@
 								<Option value={issuerName} selected={issuerName === selectedIssuerName}>{issuerName}</Option>
 							{/each}
 						</Select>
-						<Select enhanced variant="outlined" disabled={!selectedIssuerName} bind:value={issuer} label="Issuer" class="content__input content__input--last">
+						<Select enhanced variant="outlined" disabled={!selectedIssuerName} bind:value={issuer} label="Issuer" class="content__input">
 							{#each issuerDidOpt as did}
 								<Option value={did} selected={did === issuer}>{did}</Option>
 							{/each}
 						</Select>
+						<Textfield bind:value={name} label="Name" disabled={!vcChoice}/>
+						<Textfield bind:value={description} label="Description" disabled={!vcChoice}/>
 						<button class="content__submit" on:click={handleIssueVc}>
 							{#if isLoading}
 								<LoadingSpinner />
@@ -377,7 +392,7 @@
 		font-family: 'Roboto', sans-serif;
 
 		/* height: 419px; */
-		width: 480px;
+		width: 525px;
 		border-radius: 5px 5px 0 0;
 		background-color: var(--clr-background);
 	}
@@ -416,7 +431,7 @@
 
 	.card__content {
 		overflow: hidden;
-		height: 500px;
+		height: 600px;
 		padding: 40px 43px 48px 47px;
 	}
 
