@@ -82,8 +82,8 @@
 
 	$: if (vcChoice) {
 		const currentVcObj = credentialOptions.find(vc => vc.label === vcChoice).value;
-		name = currentVcObj.name;
-		description = currentVcObj.description;
+		name = currentVcObj.name ||'';
+		description = currentVcObj.description || '';
 	} else {
 		name = '';
 		description = '';
@@ -431,8 +431,8 @@
 
 	.card__content {
 		overflow: hidden;
-		height: 600px;
-		padding: 40px 43px 48px 47px;
+		height: 555px;
+		padding: 24px 43px 22px 47px;
 	}
 
 	.content__title {
@@ -441,7 +441,7 @@
 		letter-spacing: 0;
 		line-height: 28px;
 
-		margin-bottom: 1.25em;
+		margin-bottom: 1.1em;
 	}
 
 	.content {
