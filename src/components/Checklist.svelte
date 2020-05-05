@@ -57,7 +57,7 @@
     <LinearProgress style="margin-bottom: 25px" progress={completePercentage}/>
     <div class="drawer__wallet">
       <h3 class="wallet__title">Wallet</h3>
-      <img class="wallet__image" src={`./assets/images/${content[0].wallet}_logo.png`} alt={`${content[0].wallet} logo`}>
+      <img class="wallet__image  wallet__image--big" src={`./assets/images/${content[0].wallet}_logo.png`} alt={`${content[0].wallet} logo`}>
     </div>
     <ul class="drawer__checklist">
         <div class="checklist__title">
@@ -68,7 +68,7 @@
           {#if !isRawMaterial && index === 4}
             <div class="drawer__wallet">
               <h3 class="wallet__title">Wallet</h3>
-              <img class="wallet__image wallet__image--big" src={`./assets/images/${content[index].wallet}_logo.png`} alt={`${content[index].wallet} logo`}>
+              <img class="wallet__image" src={`./assets/images/${content[index].wallet}_logo.png`} alt={`${content[index].wallet} logo`}>
             </div>
           {/if}
           <FormField style="margin-bottom: 25px">

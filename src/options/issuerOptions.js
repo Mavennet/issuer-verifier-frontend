@@ -80,36 +80,52 @@ export const issuerOptions = {
       },
     ],
   },
-  "Secure Key": {
+  Factom: {
     verify_credential_endpoint:
-      "https://verifier.sandbox.trustbloc.dev/verifier/credentials",
+      "https://vc.api.factom.sphereon.com/services/verify/credentials",
     verify_presentation_endpoint:
-      "https://verifier.sandbox.trustbloc.dev/verifier/presentations",
-    src: "secure_key.png",
-    alt: "Secure Key Logo",
+      "https://vc.api.factom.sphereon.com/services/verify/presentations",
+    src: "factom.png",
+    alt: "Factom Logo",
     issuers: [
       {
-        name: "TrustBloc Issuer - TrustBloc DID",
+        name: "DID Issuers",
         endpoint:
-          "https://issuer.sandbox.trustbloc.dev/vc-issuer-interop/credentials/issueCredential",
+          "https://vc.api.factom.sphereon.com/services/issue/credentials",
         options: [
           {
             issuer:
-              "did:trustbloc:testnet.trustbloc.dev:EiCK3DGsh6BzGNm4gSTW1UMWHkGk3OrQ52pfTkYH1_DLlg",
+              "did:factom:5d0dd58757119dd437c70d92b44fbf86627ee275f0f2146c3d99e441da342d9f",
             assertionMethod:
-              "did:trustbloc:testnet.trustbloc.dev:EiCK3DGsh6BzGNm4gSTW1UMWHkGk3OrQ52pfTkYH1_DLlg#key-1",
+              "did:factom:5d0dd58757119dd437c70d92b44fbf86627ee275f0f2146c3d99e441da342d9f#key-0",
+          },
+          {
+            issuer:
+              "did:v1:test:nym:z6MkvSbsrm44VnhngbyW2rZk2u9bvSPUSmJwqYjMd4RSJT7A",
+            assertionMethod:
+              "did:v1:test:nym:z6MkvSbsrm44VnhngbyW2rZk2u9bvSPUSmJwqYjMd4RSJT7A#z6MkjFhRvbXfjmQ8iFHeYh42cNS7v4CtguLzvwZSXcHe8zqy",
           },
         ],
       },
+    ],
+  },
+  "Digital Bazaar": {
+    verify_credential_endpoint:
+      "https://verifier.interop.digitalbazaar.com/verifier/credentials",
+    verify_presentation_endpoint:
+      "https://verifier.interop.digitalbazaar.com/verifier/presentations",
+    src: "digital_bazaar.png",
+    alt: "Digital Bazaar Logo",
+    issuers: [
       {
-        name: "TrustBloc Issuer - DID Key",
+        name: "DID Key Issuer",
         endpoint:
-          "https://issuer.sandbox.trustbloc.dev/vc-issuer-interop-key/credentials/issueCredential",
+          "https://issuer.interop.digitalbazaar.com/credentials/did%3Akey%3Az6MkkHSTSr9DSNLoioiVEZq8RKm9Sn1Xs4SjZXgzQASBMdc3/issueCredential",
         options: [
           {
-            issuer: "did:key:z6MkjRagNiMu91DduvCvgEsqLZDVzrJzFrwahc4tXLt9DoHd",
+            issuer: "did:key:z6Mkg9AkjefxdJFSphkStzXwHQnbweN43mCqA37aANGRxF1o",
             assertionMethod:
-              "did:key:z6MkjRagNiMu91DduvCvgEsqLZDVzrJzFrwahc4tXLt9DoHd#z6MkjRagNiMu91DduvCvgEsqLZDVzrJzFrwahc4tXLt9DoHd",
+              "did:key:z6Mkg9AkjefxdJFSphkStzXwHQnbweN43mCqA37aANGRxF1o#z6Mkg9AkjefxdJFSphkStzXwHQnbweN43mCqA37aANGRxF1o",
           },
         ],
       },
@@ -147,52 +163,36 @@ export const issuerOptions = {
       },
     ],
   },
-  "Digital Bazaar": {
+  "Secure Key": {
     verify_credential_endpoint:
-      "https://verifier.interop.digitalbazaar.com/verifier/credentials",
+      "https://verifier.sandbox.trustbloc.dev/verifier/credentials",
     verify_presentation_endpoint:
-      "https://verifier.interop.digitalbazaar.com/verifier/presentations",
-    src: "digital_bazaar.png",
-    alt: "Digital Bazaar Logo",
+      "https://verifier.sandbox.trustbloc.dev/verifier/presentations",
+    src: "secure_key.png",
+    alt: "Secure Key Logo",
     issuers: [
       {
-        name: "DID Key Issuer",
+        name: "TrustBloc Issuer - TrustBloc DID",
         endpoint:
-          "https://issuer.interop.digitalbazaar.com/credentials/did%3Akey%3Az6MkkHSTSr9DSNLoioiVEZq8RKm9Sn1Xs4SjZXgzQASBMdc3/issueCredential",
+          "https://issuer.sandbox.trustbloc.dev/vc-issuer-interop/credentials/issueCredential",
         options: [
           {
-            issuer: "did:key:z6Mkg9AkjefxdJFSphkStzXwHQnbweN43mCqA37aANGRxF1o",
+            issuer:
+              "did:trustbloc:testnet.trustbloc.dev:EiCK3DGsh6BzGNm4gSTW1UMWHkGk3OrQ52pfTkYH1_DLlg",
             assertionMethod:
-              "did:key:z6Mkg9AkjefxdJFSphkStzXwHQnbweN43mCqA37aANGRxF1o#z6Mkg9AkjefxdJFSphkStzXwHQnbweN43mCqA37aANGRxF1o",
+              "did:trustbloc:testnet.trustbloc.dev:EiCK3DGsh6BzGNm4gSTW1UMWHkGk3OrQ52pfTkYH1_DLlg#key-1",
           },
         ],
       },
-    ],
-  },
-  Factom: {
-    verify_credential_endpoint:
-      "https://vc.api.factom.sphereon.com/services/verify/credentials",
-    verify_presentation_endpoint:
-      "https://vc.api.factom.sphereon.com/services/verify/presentations",
-    src: "factom.png",
-    alt: "Factom Logo",
-    issuers: [
       {
-        name: "DID Issuers",
+        name: "TrustBloc Issuer - DID Key",
         endpoint:
-          "https://vc.api.factom.sphereon.com/services/issue/credentials",
+          "https://issuer.sandbox.trustbloc.dev/vc-issuer-interop-key/credentials/issueCredential",
         options: [
           {
-            issuer:
-              "did:factom:5d0dd58757119dd437c70d92b44fbf86627ee275f0f2146c3d99e441da342d9f",
+            issuer: "did:key:z6MkjRagNiMu91DduvCvgEsqLZDVzrJzFrwahc4tXLt9DoHd",
             assertionMethod:
-              "did:factom:5d0dd58757119dd437c70d92b44fbf86627ee275f0f2146c3d99e441da342d9f#key-0",
-          },
-          {
-            issuer:
-              "did:v1:test:nym:z6MkvSbsrm44VnhngbyW2rZk2u9bvSPUSmJwqYjMd4RSJT7A",
-            assertionMethod:
-              "did:v1:test:nym:z6MkvSbsrm44VnhngbyW2rZk2u9bvSPUSmJwqYjMd4RSJT7A#z6MkjFhRvbXfjmQ8iFHeYh42cNS7v4CtguLzvwZSXcHe8zqy",
+              "did:key:z6MkjRagNiMu91DduvCvgEsqLZDVzrJzFrwahc4tXLt9DoHd#z6MkjRagNiMu91DduvCvgEsqLZDVzrJzFrwahc4tXLt9DoHd",
           },
         ],
       },

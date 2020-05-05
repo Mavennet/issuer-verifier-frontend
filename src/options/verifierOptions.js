@@ -16,18 +16,11 @@ export const verifierOptions = [
     presentation_url: 'https://vc.transmute.world/v0.1.0/verify/presentations'
   },
   {
-    id: COMPANIES.SECURE_KEY,
-    alt: 'Secure Key Verifier Logo',
-    src: 'secure_key.png',
-    credential_url: 'https://verifier.sandbox.trustbloc.dev/verifier/credentials',
-    presentation_url: 'https://verifier.sandbox.trustbloc.dev/verifier/presentations'
-  },
-  {
-    id: COMPANIES.DANUBE_TECH,
-    alt: 'Danube Tech Verifier Logo',
-    src: 'danube_tech.png',
-    credential_url: 'https://univerifier.io/api/verifier/credentials',
-    presentation_url: 'https://univerifier.io/api/verifier/presentations'
+    id: COMPANIES.FACTOM,
+    alt: 'Factom Verifier Logo',
+    src: 'factom.png',
+    credential_url: 'https://vc.api.factom.sphereon.com/services/verify/credentials',
+    presentation_url: 'https://vc.api.factom.sphereon.com/services/verify/presentations'
   },
   {
     id: COMPANIES.DIGITAL_BAZAAR,
@@ -37,11 +30,18 @@ export const verifierOptions = [
     presentation_url: 'https://verifier.interop.digitalbazaar.com/verifier/presentations'
   },
   {
-    id: COMPANIES.FACTOM,
-    alt: 'Factom Verifier Logo',
-    src: 'factom.png',
-    credential_url: 'https://vc.api.factom.sphereon.com/services/verify/credentials',
-    presentation_url: 'https://vc.api.factom.sphereon.com/services/verify/presentations'
+    id: COMPANIES.DANUBE_TECH,
+    alt: 'Danube Tech Verifier Logo',
+    src: 'danube_tech.png',
+    credential_url: 'https://univerifier.io/api/verifier/credentials',
+    presentation_url: 'https://univerifier.io/api/verifier/presentations'
+  },
+  {
+    id: COMPANIES.SECURE_KEY,
+    alt: 'Secure Key Verifier Logo',
+    src: 'secure_key.png',
+    credential_url: 'https://verifier.sandbox.trustbloc.dev/verifier/credentials',
+    presentation_url: 'https://verifier.sandbox.trustbloc.dev/verifier/presentations'
   },
   {
     id: COMPANIES.SICPA,
