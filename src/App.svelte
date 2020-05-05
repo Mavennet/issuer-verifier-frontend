@@ -287,26 +287,26 @@
 	<main class="page-content">
 		<img class="logo" src={logoSrc} alt="Mavennet Logo">
 
-		<section class="card">
-			<header class="card__header">
-				<nav class="header__nav">
-					<button 
-						class="nav__item" 
-						class:nav__item--active="{selectedTab === 0}"
-						on:click|preventDefault={() => selectTab(0) }
-						>Issuer
-					</button>
-					<button
-						class="nav__item" 
-						class:nav__item--active="{selectedTab === 1}"
-						on:click={() => selectTab(1)}
-						>Verifier
-					</button>
-				</nav>
-			</header>
-			<div class="card__content">
-				{#if selectedTab === 0}
-					{#if credentialId}
+		<section class="card" class:card--authenticate="{!credentialId}">
+			{#if credentialId}
+				<header class="card__header">
+					<nav class="header__nav">
+						<button 
+							class="nav__item" 
+							class:nav__item--active="{selectedTab === 0}"
+							on:click|preventDefault={() => selectTab(0) }
+							>Issuer
+						</button>
+						<button
+							class="nav__item" 
+							class:nav__item--active="{selectedTab === 1}"
+							on:click={() => selectTab(1)}
+							>Verifier
+						</button>
+					</nav>
+				</header>
+				<div class="card__content">
+					{#if selectedTab === 0}
 						<div class="content" in:fly="{{ x: -200, duration: 700 }}">
 							<h1 class="content__title">Add To Wallet</h1>
 							<div class="content__verifiers">
@@ -349,50 +349,51 @@
 								{/if}
 							</button>
 						</div>
-					{:else}
-						<div class="authentication__wrapper" in:fly="{{ x: -200, duration: 700 }}">
-							<button class="content__submit authentication__button" on:click={handleAuthentication}>
+						
+					{:else if selectedTab === 1}
+						<div class="content" in:fly="{{ x: 200, duration: 700 }}">
+							<h1 class="content__title">Verify From Wallet</h1>
+							<div class="content__verifiers">
+								<h2 class="verifiers__title">Select a verifier</h2>
+								<ul class="verifiers__list">
+									{#each verifierOptions as verifier}
+										<li class="list__item">
+											<img 
+												class="item__logo" 
+												src={`./assets/images/${verifier.src}`} 
+												alt={verifier.alt}
+												class:item__logo--active="{selectedVerifier === verifier.id}"
+												on:click={() => selectVerifier(verifier.id)}>
+										</li>
+									{/each}
+								</ul>
+							</div>
+							<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input content__input--last">
+								{#each credentialOptions as credential}
+									<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
+								{/each}
+							</Select>
+							<button class="content__submit" on:click={handleVerifyVc}>
 								{#if isLoading}
 									<LoadingSpinner />
 								{:else}
-									AUTHENTICATE
+									VERIFY
 								{/if}
 							</button>
 						</div>
 					{/if}
-				{:else if selectedTab === 1}
-					<div class="content" in:fly="{{ x: 200, duration: 700 }}">
-						<h1 class="content__title">Verify From Wallet</h1>
-						<div class="content__verifiers">
-							<h2 class="verifiers__title">Select a verifier</h2>
-							<ul class="verifiers__list">
-								{#each verifierOptions as verifier}
-									<li class="list__item">
-										<img 
-											class="item__logo" 
-											src={`./assets/images/${verifier.src}`} 
-											alt={verifier.alt}
-											class:item__logo--active="{selectedVerifier === verifier.id}"
-											on:click={() => selectVerifier(verifier.id)}>
-									</li>
-								{/each}
-							</ul>
-						</div>
-						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input content__input--last">
-							{#each credentialOptions as credential}
-								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
-							{/each}
-						</Select>
-						<button class="content__submit" on:click={handleVerifyVc}>
-							{#if isLoading}
-								<LoadingSpinner />
-							{:else}
-								VERIFY
-							{/if}
-						</button>
-					</div>
-				{/if}
-			</div>
+				</div>
+			{:else}
+				<div class="authentication__wrapper" in:fly="{{ x: -200, duration: 700 }}">
+					<button class="content__submit authentication__button" on:click={handleAuthentication}>
+						{#if isLoading}
+							<LoadingSpinner />
+						{:else}
+							AUTHENTICATE
+						{/if}
+					</button>
+				</div>
+			{/if}
 		</section>
 	</main>
 </div>
@@ -437,6 +438,11 @@
 		width: 525px;
 		border-radius: 5px 5px 0 0;
 		background-color: var(--clr-background);
+	}
+
+	.card--authenticate {
+		padding: 3em 5em;
+		border-radius: 5px 5px 5px 5px;
 	}
 
 	.header__nav {
