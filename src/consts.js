@@ -1,6 +1,11 @@
+export const AUTHENTICATION_MESSAGE = {
+  SUCCESS: 'Successfully authenticated!',
+  ERROR: 'It was not possible to authenticate!',
+}
+
 export const ISSUER_MESSAGE = {
   SUCCESS: 'The credential was successfully issued and stored in you wallet!',
-  ERROR: 'It was not possible to issue and store the credential in you wallet!'
+  ERROR: 'It was not possible to issue and store the credential in you wallet!',
 };
 
 export const VERIFIER_MESSAGE = {

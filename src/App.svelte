@@ -17,7 +17,8 @@
 		getCredentialQuery, 
 		getVerifiablePresentation, 
 		getOptions,
-		replaceUuidUrlId
+		replaceUuidUrlId,
+		getAuthQuery
 	} from './helpers';
 
 	import { credentialOptions } from './options/credentialOptions';
@@ -27,7 +28,8 @@
 
   import { rawMaterialTestSuit, prcTestSuit } from './content';
 
-	import { 
+	import {
+		AUTHENTICATION_MESSAGE, 
 		ISSUER_MESSAGE, 
 		VERIFIER_MESSAGE, 
 		FORM_MESSAGE,
@@ -63,7 +65,8 @@
 		selectedIssuerCompany,
 		selectedIssuerName,
 		issuerNameOpt = [],
-		issuerDidOpt = [];
+		issuerDidOpt = [],
+		credentialId;
 
 	/**
 	 * Verifier variable
@@ -153,6 +156,7 @@
 		credential.id = replaceUuidUrlId(credential.id);
 		credential.name = name;
 		credential.description = description;
+		credential.credentialSubject.id = credentialId;
 		credential = { ...credential, issuer, issuanceDate: options.issuanceDate};
 		try {
 			isLoading = true;
@@ -224,6 +228,28 @@
 		}
 	}
 
+	async function handleAuthentication() {
+		try {
+			isLoading = true;
+	
+			const query = getAuthQuery(window.location.host);
+			const result = await navigator.credentials.get(query);
+			
+			if (!result) {
+      	throw new Error('Get credential operation did not succeed');
+			}
+			credentialId = result.data.holder;
+
+			showSnackbar(SNACKBAR_TYPE.SUCCESS, AUTHENTICATION_MESSAGE.SUCCESS);
+		} catch (err) {
+			console.log('Error authenticating', err);
+			showSnackbar(SNACKBAR_TYPE.ERROR, AUTHENTICATION_MESSAGE.ERROR);
+		} finally {
+			isLoading = false;
+		}
+
+	}
+
 	function validateVerifyForm() {
 		if (!vcChoice) {
 			showSnackbar(SNACKBAR_TYPE.WARNING, FORM_MESSAGE.TYPE);
@@ -280,48 +306,60 @@
 			</header>
 			<div class="card__content">
 				{#if selectedTab === 0}
-					<div class="content" in:fly="{{ x: -200, duration: 700 }}">
-						<h1 class="content__title">Add To Wallet</h1>
-						<div class="content__verifiers">
-							<h2 class="verifiers__title">Select an Issuer</h2>
-							<ul class="verifiers__list">
-								{#each Object.keys(issuerOptions) as issuerCompanyItem}
-									<li class="list__item">
-										<img 
-											class="item__logo" 
-											src={`./assets/images/${issuerOptions[issuerCompanyItem].src}`} 
-											alt={issuerOptions[issuerCompanyItem].alt}
-											class:item__logo--active="{selectedIssuerCompany === issuerCompanyItem}"
-											on:click={() => selectIssuerCompany(issuerCompanyItem)}>
-									</li>
+					{#if credentialId}
+						<div class="content" in:fly="{{ x: -200, duration: 700 }}">
+							<h1 class="content__title">Add To Wallet</h1>
+							<div class="content__verifiers">
+								<h2 class="verifiers__title">Select an Issuer</h2>
+								<ul class="verifiers__list">
+									{#each Object.keys(issuerOptions) as issuerCompanyItem}
+										<li class="list__item">
+											<img 
+												class="item__logo" 
+												src={`./assets/images/${issuerOptions[issuerCompanyItem].src}`} 
+												alt={issuerOptions[issuerCompanyItem].alt}
+												class:item__logo--active="{selectedIssuerCompany === issuerCompanyItem}"
+												on:click={() => selectIssuerCompany(issuerCompanyItem)}>
+										</li>
+									{/each}
+								</ul>
+							</div>
+							<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
+								{#each credentialOptions as credential}
+									<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
 								{/each}
-							</ul>
+							</Select>
+							<Select enhanced variant="outlined" disabled={!selectedIssuerCompany} bind:value={selectedIssuerName} on:change="{() => console.log('teste')}" label="Issuer Name" class="content__input">
+								{#each issuerNameOpt as issuerName}
+									<Option value={issuerName} selected={issuerName === selectedIssuerName}>{issuerName}</Option>
+								{/each}
+							</Select>
+							<Select enhanced variant="outlined" disabled={!selectedIssuerName} bind:value={issuer} label="Issuer" class="content__input">
+								{#each issuerDidOpt as did}
+									<Option value={did} selected={did === issuer}>{did}</Option>
+								{/each}
+							</Select>
+							<Textfield bind:value={name} label="Name" disabled={!vcChoice}/>
+							<Textfield bind:value={description} label="Description" disabled={!vcChoice}/>
+							<button class="content__submit" on:click={handleIssueVc}>
+								{#if isLoading}
+									<LoadingSpinner />
+								{:else}
+									RECEIVE
+								{/if}
+							</button>
 						</div>
-						<Select enhanced variant="outlined" bind:value={vcChoice} label="Type" class="content__input">
-							{#each credentialOptions as credential}
-								<Option value={credential.label} selected={vcChoice === credential.label}>{credential.label}</Option>
-							{/each}
-						</Select>
-						<Select enhanced variant="outlined" disabled={!selectedIssuerCompany} bind:value={selectedIssuerName} on:change="{() => console.log('teste')}" label="Issuer Name" class="content__input">
-							{#each issuerNameOpt as issuerName}
-								<Option value={issuerName} selected={issuerName === selectedIssuerName}>{issuerName}</Option>
-							{/each}
-						</Select>
-						<Select enhanced variant="outlined" disabled={!selectedIssuerName} bind:value={issuer} label="Issuer" class="content__input">
-							{#each issuerDidOpt as did}
-								<Option value={did} selected={did === issuer}>{did}</Option>
-							{/each}
-						</Select>
-						<Textfield bind:value={name} label="Name" disabled={!vcChoice}/>
-						<Textfield bind:value={description} label="Description" disabled={!vcChoice}/>
-						<button class="content__submit" on:click={handleIssueVc}>
-							{#if isLoading}
-								<LoadingSpinner />
-							{:else}
-								RECEIVE
-							{/if}
-						</button>
-					</div>
+					{:else}
+						<div class="authentication__wrapper">
+							<button class="content__submit authentication__button" on:click={handleAuthentication}>
+								{#if isLoading}
+									<LoadingSpinner />
+								{:else}
+									AUTHENTICATE
+								{/if}
+							</button>
+						</div>
+					{/if}
 				{:else if selectedTab === 1}
 					<div class="content" in:fly="{{ x: 200, duration: 700 }}">
 						<h1 class="content__title">Verify From Wallet</h1>
@@ -437,6 +475,19 @@
 		overflow: hidden;
 		height: 555px;
 		padding: 24px 43px 22px 47px;
+	}
+
+	.authentication__wrapper {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.authentication__button {
+		width: 100%;
+		margin: auto !important;
 	}
 
 	.content__title {

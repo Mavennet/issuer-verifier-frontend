@@ -23,6 +23,24 @@ export const getCredentialQuery = type => ({
   }
 });
 
+export const getAuthQuery = (domain) => {
+  const challenge = uuidv4();
+
+  const query = {
+    web: {
+      VerifiablePresentation: {
+          query: {
+              type: 'DIDAuth'
+          },
+          challenge,
+          domain
+      }
+    }
+  }
+
+  return query;
+}
+
 export const getVerifiablePresentation = verifiableCredential => ({
   "@context": [
     "https://www.w3.org/2018/credentials/v1"
