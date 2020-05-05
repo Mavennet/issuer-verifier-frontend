@@ -39,7 +39,7 @@
     <header class="drawer__header">
       <img class="header__close-icon" on:click={closeDrawer} src="assets/icons/times-solid.svg" alt="close icon">
     </header>
-    <h2 class="drawer__title">{isRawMaterial ? 'Raw Material Cohort Tests' : 'PRC Tests'}</h2>
+    <h2 class="drawer__title">{isRawMaterial ? 'Raw Materials' : 'PRC'}</h2>
     <LinearProgress style="margin-bottom: 45px" progress={completePercentage}/>
     <ul class="drawer__checklist">
         <div class="checklist__title">
