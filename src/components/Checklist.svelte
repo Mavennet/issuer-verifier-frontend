@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from 'svelte';
+
   import Checkbox from '@smui/checkbox';
   import FormField from '@smui/form-field';
   import LinearProgress from '@smui/linear-progress';
@@ -10,7 +12,17 @@
     isDrawerOpen = false,
     checkedAmount = 0,
     completePercentage = 0,
-    checkListObj = content.reduce((res, curr, index) => ({ ...res, index: false }), {});
+    key,
+    checkListObj = content.reduce((res, curr, index) => ({ ...res, [index]: false }), {});
+
+  onMount(() => {
+    key = isRawMaterial ? 'raw_checklist' : 'prc_checklist';
+
+    const checklist = localStorage.getItem(key);
+    if (checklist) {
+      checkListObj = JSON.parse(checklist);
+    }
+  });
 
   function closeDrawer() {
     isDrawerOpen = false;
@@ -22,6 +34,8 @@
 
   function updateProgress(event) {
     const { checked } = event.target;
+    
+    localStorage.setItem(key, JSON.stringify(checkListObj));
 
     checkedAmount = checked ? checkedAmount + 1 : checkedAmount - 1;
     completePercentage = checkedAmount / content.length;
