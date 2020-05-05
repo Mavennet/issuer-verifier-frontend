@@ -40,7 +40,11 @@
       <img class="header__close-icon" on:click={closeDrawer} src="assets/icons/times-solid.svg" alt="close icon">
     </header>
     <h2 class="drawer__title">{isRawMaterial ? 'Raw Materials' : 'PRC'}</h2>
-    <LinearProgress style="margin-bottom: 45px" progress={completePercentage}/>
+    <LinearProgress style="margin-bottom: 25px" progress={completePercentage}/>
+    <div class="drawer__wallet">
+      <h3 class="wallet__title">Wallet</h3>
+      <img class="wallet__image" src={`./assets/images/${content[0].wallet}_logo.png`} alt={`${content[0].wallet} logo`}>
+    </div>
     <ul class="drawer__checklist">
         <div class="checklist__title">
           <p class="title__item">Issuer</p> 
@@ -107,6 +111,7 @@
     height: 85vh;
     z-index: 999999;
     background-color: white;
+
     border-radius: 4px 0 0 4px;
 
     padding: 25px 45px 25px 35px;
@@ -121,9 +126,10 @@
     overflow-y: scroll;
   }
 
-  .drawer--isRawMaterial {
+  .drawer.drawer--isRawMaterial {
     left: -34vw;
     right: auto;
+    border-radius: 0 4px 4px 0 !important;
   }
 
   .drawer--open {
@@ -153,6 +159,28 @@
 		letter-spacing: 0;
     line-height: 28px;
     margin-bottom: 23px;
+  }
+
+  .drawer__wallet {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+
+  .wallet__title {
+    color: #9b9b9b;
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: 24px;
+    font-weight: normal;
+    margin-bottom: 8px;
+  }
+
+  .wallet__image {
+    max-height: 40px;
+    max-width: 200px;
   }
 
   .drawer__checklist {
