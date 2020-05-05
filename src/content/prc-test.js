@@ -28,25 +28,25 @@ export const testSuit = [
   {
     issuer: COMPANIES.DIGITAL_BAZAAR,
     verifier: COMPANIES.MAVENNET,
-    wallet: COMPANIES.TRANSMUTE,
+    wallet: COMPANIES.SECURE_KEY,
     credential: 'Permanent Resident Card',
   },
   {
     issuer: COMPANIES.DANUBE_TECH,
     verifier: COMPANIES.MAVENNET,
-    wallet: COMPANIES.TRANSMUTE,
+    wallet: COMPANIES.SECURE_KEY,
     credential: 'Permanent Resident Card',
   },
   {
     issuer: COMPANIES.SECURE_KEY,
     verifier: COMPANIES.MAVENNET,
-    wallet: COMPANIES.TRANSMUTE,
+    wallet: COMPANIES.SECURE_KEY,
     credential: 'Permanent Resident Card',
   },
   {
     issuer: COMPANIES.SICPA,
     verifier: COMPANIES.MAVENNET,
-    wallet: COMPANIES.TRANSMUTE,
+    wallet: COMPANIES.SECURE_KEY,
     credential: 'Permanent Resident Card',
   },
 ];

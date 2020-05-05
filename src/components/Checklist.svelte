@@ -51,6 +51,12 @@
           <p class="title__item">Verifier</p>
         </div>
         {#each content as testCase, index}
+          {#if !isRawMaterial && index === 4}
+            <div class="drawer__wallet">
+              <h3 class="wallet__title">Wallet</h3>
+              <img class="wallet__image wallet__image--big" src={`./assets/images/${content[index].wallet}_logo.png`} alt={`${content[index].wallet} logo`}>
+            </div>
+          {/if}
           <FormField style="margin-bottom: 25px">
               <Checkbox on:change={updateProgress} bind:checked={checkListObj[index]} />
               <span class="checklist__label" slot="label">
@@ -181,6 +187,10 @@
   .wallet__image {
     max-height: 40px;
     max-width: 200px;
+  }
+
+  .wallet__image--big {
+    max-height: 100px;
   }
 
   .drawer__checklist {
