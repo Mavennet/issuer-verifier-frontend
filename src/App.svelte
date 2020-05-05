@@ -350,7 +350,7 @@
 							</button>
 						</div>
 					{:else}
-						<div class="authentication__wrapper">
+						<div class="authentication__wrapper" in:fly="{{ x: -200, duration: 700 }}">
 							<button class="content__submit authentication__button" on:click={handleAuthentication}>
 								{#if isLoading}
 									<LoadingSpinner />
