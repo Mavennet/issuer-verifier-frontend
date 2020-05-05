@@ -20,7 +20,7 @@ export const issuerOptions = {
         ],
       },
       {
-        name: "DID Test Issuer",
+        name: "DID:V1 Issuer",
         endpoint: "https://api.neo-flow.com/credentials/issueCredential",
         options: [
           {
