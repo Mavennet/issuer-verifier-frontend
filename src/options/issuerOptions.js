@@ -140,16 +140,6 @@ export const issuerOptions = {
     alt: "Danube Tech Logo",
     issuers: [
       {
-        name: "Universal Issuer (did:sov)",
-        endpoint: "https://uniissuer.io/api/credentials/issueCredential",
-        options: [
-          {
-            issuer: "did:sov:danube:VZoG2R1UneUscisG1eLxJb",
-            assertionMethod: "did:sov:danube:VZoG2R1UneUscisG1eLxJb#key-1",
-          },
-        ],
-      },
-      {
         name: "Universal Issuer (div:v1)",
         endpoint: "https://uniissuer.io/api/credentials/issueCredential",
         options: [
@@ -206,17 +196,6 @@ export const issuerOptions = {
     src: "sicpa.png",
     alt: "Sicpa Logo",
     issuers: [
-      {
-        name: "DID sov issuer",
-        endpoint:
-          "https://svip-interop.ocs-support.com/api/credentials/issueCredential",
-        options: [
-          {
-            issuer: "did:sov:staging:PiEVD2uU2qKEQ5oxx1BJ6A",
-            assertionMethod: "did:sov:staging:PiEVD2uU2qKEQ5oxx1BJ6A#key-1",
-          },
-        ],
-      },
       {
         name: "DID Key Issuer",
         endpoint:
