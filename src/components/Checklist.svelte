@@ -21,6 +21,15 @@
     const checklist = localStorage.getItem(key);
     if (checklist) {
       checkListObj = JSON.parse(checklist);
+      checkedAmount = Object.values(checkListObj).reduce((res, curr) => {
+        if (curr) {
+          return res + 1;
+        }
+
+        return res;
+      }, 0);
+
+      completePercentage = checkedAmount/Object.values(checkListObj).length;
     }
   });
 
