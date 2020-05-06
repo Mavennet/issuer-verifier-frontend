@@ -145,9 +145,9 @@ export const issuerOptions = {
         options: [
           {
             issuer:
-              "did:v1:test:nym:z6MktyAYL7sVcmPQPTbbMqrnGMNwp6zkvRvKREs94f81fA1K",
+              "did:v1:test:nym:z6MkfqxbQu6ikzpZRM3GwaFiUzy5vDgbmt99MGLA38kZUnEB",
             assertionMethod:
-              "did:v1:test:nym:z6MktyAYL7sVcmPQPTbbMqrnGMNwp6zkvRvKREs94f81fA1K#z6MkgumSeJ8FGqFjXFPJSsT2EFCNYVvx5RXDQ6oBYDrmtiDb",
+              "did:v1:test:nym:z6MkfqxbQu6ikzpZRM3GwaFiUzy5vDgbmt99MGLA38kZUnEB#z6MkgmQGoevpPSeqb74jYSomuoWhXyJ9t5XtMAPq6NVFGssL",
           },
         ],
       },
