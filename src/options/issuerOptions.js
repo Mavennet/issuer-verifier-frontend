@@ -162,19 +162,6 @@ export const issuerOptions = {
     alt: "Secure Key Logo",
     issuers: [
       {
-        name: "TrustBloc Issuer - TrustBloc DID",
-        endpoint:
-          "https://issuer.sandbox.trustbloc.dev/vc-issuer-interop/credentials/issueCredential",
-        options: [
-          {
-            issuer:
-              "did:trustbloc:testnet.trustbloc.dev:EiCK3DGsh6BzGNm4gSTW1UMWHkGk3OrQ52pfTkYH1_DLlg",
-            assertionMethod:
-              "did:trustbloc:testnet.trustbloc.dev:EiCK3DGsh6BzGNm4gSTW1UMWHkGk3OrQ52pfTkYH1_DLlg#key-1",
-          },
-        ],
-      },
-      {
         name: "TrustBloc Issuer - DID Key",
         endpoint:
           "https://issuer.sandbox.trustbloc.dev/vc-issuer-interop-key/credentials/issueCredential",
